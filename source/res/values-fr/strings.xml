@@ -1,0 +1,68 @@
+
+<resources>
+	<string name="app_name">Compagnon t411</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="title_activity_main">Compagnon t411</string>
+    <string name="main_login">Pseudonyme</string>
+    <string name="main_password">Mot de passe</string>
+    <string name="main_connect">Enregistrer</string>
+    <string name="description_logo">Logo t411.me</string>
+    <string name="service_settings">Configuration</string>
+    <string name="button_mail">Boite de réception</string>
+    <string name="button_service">Configuration</string>
+    <string name="button_useraccount">Compte utilisateur</string>
+    <string name="toggle_ON">ON</string>
+    <string name="toggle_OFF">OFF</string>
+    <string name="chk_ratioAlert">Alerte ratio</string>
+    <string name="chk_lowLimit">Limite basse</string>
+    <string name="chk_msgAlert">Alerte messagerie</string>
+    <string name="test_notif">Test notification</string>
+    <string name="msgAlertEnabled">Notification activér</string>
+    <string name="msgAlertDisabled">Notification désactivée</string>
+    <string name="active">Activer</string>
+    <string name="default_username">Pseudonyme</string>
+    <string name="lastUpdate">"Dernière mise à jour : "</string>
+    <string name="savedData">Données sauvegardées.</string>
+    <string name="btnStartService">(Re)démarrer le service</string>
+    <string name="about">A propos...</string>
+    <string name="description_ratioAlert">Afficher une notification si le ratio passe sous le seuil défini.</string>
+    <string name="description_mailAlert">Afficher une notification à la réception d\'un message.</string>
+    <string name="repeatTime">Fréquence (mn)</string>
+    <string name="description_frequency">Définit l\'intervalle entre 2 mises à jour. Attention, une fréquence haute consomme davantage de batterie...</string>
+    <string name="show_notifs">Notifications système</string>
+    <string name="description_notifSystem">Afficher une notification furtive lors d\'une mise à jour des données</string>
+    <string name="WhatToDo">Que faire ?</string>
+    <string name="open_app">Ouvrir l\'application</string>
+    <string name="update_now">Mettre à jour</string>
+    <string name="read_mails">Boîte de réception</string>
+    <string name="goto_t411">Aller sur t411.me</string>
+    <string name="widget_action">Action du widget...</string>
+    <string name="answer">Répondre</string>
+    <string name="delete">Supprimer</string>
+    <string name="archive">Archiver</string>
+    
+    <string name="notif_update">Mise à jour...</string>
+    <string name="notif_upd_title">Mise à jour</string>
+    <string name="notif_upd_content">Téléchargement des données...</string>
+    
+    <string name="notif_message">Nouveaux messages</string>
+    <string name="notif_msg_title">Vous avez de nouveaux messages sur t411</string>
+    <string name="notif_msg_content">Touchez pour les lire</string>
+    
+    <string name="notif_ratio">Ratio faible</string>
+    <string name="notif_ratio_title">Votre ratio est faible</string>
+    <string name="notif_ratio_content">Touchez pour reconfigurer</string>
+    
+    <string name="waiting_for_update">Attente de mise à jour...</string>
+    <string name="askWhatToDo">Toujours demander</string>
+    <string name="ChooseAction">Choisir une action</string>
+    
+    <string name="pleasewait">Veuillez patienter</string>
+    <string name="getMesages">Récupération des messages...</string>
+    <string name="getMesageContent">Récupération du contenu...</string>
+    
+    <string name="donate">Faire un don (1€)</string>
+	<string name="considerDonate">Vous aimez l\'appli? Offrez-moi une bière ;o) !</string>
+    
+</resources>

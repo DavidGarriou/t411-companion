@@ -1,0 +1,72 @@
+<resources>
+
+    <color name="t411_blue">#0059B4</color>
+    <color name="t411_red">#b40000</color>
+    <color name="t411_green">#129b00</color>
+    <color name="t411_black">#000000</color>
+    
+    <string name="app_name">t411 companion</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">t411 companion</string>
+    <string name="main_login">Username</string>
+    <string name="main_password">Password</string>
+    <string name="main_connect">Save</string>
+    <string name="description_logo">t411.me logo</string>
+    <string name="service_settings">Settings</string>
+    <string name="button_mail">Inbox</string>
+    <string name="button_service">Settings</string>
+    <string name="button_useraccount">User account</string>
+    <string name="toggle_ON">ON</string>
+    <string name="toggle_OFF">OFF</string>
+    <string name="chk_ratioAlert">Ratio alert</string>
+    <string name="chk_lowLimit">Low limit</string>
+    <string name="chk_msgAlert">Message alert</string>
+    <string name="msgAlertEnabled">Enabled</string>
+    <string name="msgAlertDisabled">Disabled</string>
+    <string name="active">Enable</string>
+    <string name="default_username">Username</string>
+    <string name="lastUpdate">"Last update : "</string>
+    <string name="savedData">Saved.</string>
+    <string name="btnStartService">(Re)start service</string>
+    <string name="about">About...</string>
+    <string name="description_ratioAlert">Notify if ratio is lower than the fixed limit.</string>
+    <string name="description_mailAlert">Notify on new message.</string>
+    <string name="repeatTime">Frequency (mn)</string>
+    <string name="description_frequency">Define interval between updates. Warning : lower value means higher battery use...</string>
+    <string name="show_notifs">System notifications</string>
+    <string name="description_notifSystem">Notify on update</string>
+    <string name="WhatToDo">Choose an action</string>
+    <string name="open_app">Open app</string>
+    <string name="update_now">Update now</string>
+    <string name="read_mails">Inbox</string>
+    <string name="goto_t411">Browse t411.me</string>
+    <string name="widget_action">Widget action...</string>
+    <string name="answer">Answer</string>
+    <string name="delete">Delete</string>
+    <string name="archive">Archive</string>
+    
+    <string name="notif_update">Updating...</string>
+    <string name="notif_upd_title">Upading</string>
+    <string name="notif_upd_content">Downloading data...</string>
+    
+    <string name="notif_message">New messages</string>
+    <string name="notif_msg_title">You have new messages on t411</string>
+    <string name="notif_msg_content">Touch to read</string>
+    
+    <string name="notif_ratio">Low ratio</string>
+    <string name="notif_ratio_title">Your ratio is low</string>
+    <string name="notif_ratio_content">Touch to configure</string>
+    
+    <string name="waiting_for_update">Waiting for update...</string>
+    <string name="askWhatToDo">Always ask</string>
+    <string name="ChooseAction">Chose action</string>
+    
+    <string name="pleasewait">Please wait</string>
+    <string name="getMesages">Getting messages list...</string>
+    <string name="getMesageContent">Getting message content...</string>
+    
+    <string name="donate">Buy me a beer ! ;o)</string>
+	<string name="considerDonate">Enjoy the app? consider donating € 1 !</string>
+    
+</resources>

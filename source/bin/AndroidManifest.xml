@@ -1,0 +1,59 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="fr.lepetitpingouin.android.t411"
+    android:versionCode="8"
+    android:versionName="0.8 alpha (dev)">
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="8" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    
+
+    <application
+        android:icon="@drawable/ic_new"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" android:allowBackup="true">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+        </activity>
+        <receiver android:name=".Widget_Full"
+			android:label="@string/app_name">
+			<intent-filter 
+			    android:priority="100" >
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/widget_full_provider" />
+		</receiver>
+		<receiver
+            android:name="Receiver">
+   			<intent-filter>
+            	<action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+         </receiver>
+        <activity android:name="Settings" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <service android:name="t411updater" android:label="t411updateService" android:process=":t411Service"></service>
+        <activity android:name="userLogin"></activity>
+        <activity android:name="messagesActivity"
+            android:configChanges="orientation" ></activity>
+        <activity android:name="aboutActivity"></activity>
+        <activity android:name="readMailActivity"
+            android:configChanges="orientation"></activity>
+        <activity android:name="actionSelector"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:process=":t411action"
+            android:launchMode="singleInstance">
+        </activity>
+    </application>
+
+</manifest>
