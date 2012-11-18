@@ -16,13 +16,13 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
 
-public class Widget_Full extends AppWidgetProvider {
+public class Widget_half extends AppWidgetProvider {
 
 	ImageButton updateBtn;
-	String ratio, upload, download, mails, username, origusername;
+	String ratio, upload, download, mails;
 	// Les mÃªmes, qui vont servir de tampon pour valider les donnÃ©es du
 	// service
-	String _ratio, _upload, _download, _mails, _username;
+	String _ratio, _upload, _download, _mails;
 	Date date = new Date();
 	Intent myIntent = new Intent();
 	PendingIntent pIntent;
@@ -34,8 +34,6 @@ public class Widget_Full extends AppWidgetProvider {
 		Log.v("widget t411", "onUpdate");
 		final int N = appWidgetIds.length;
 
-		username = context.getString(R.string.waiting_for_update);
-		origusername = username;
 
 		// loop through all app widgets the user has enabled
 		for (int i = 0; i < N; i++) {
@@ -43,12 +41,12 @@ public class Widget_Full extends AppWidgetProvider {
 
 			// get our view so we can edit the time
 			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.widget_full);
+					R.layout.widget_half);
 
 			date = new Date();
 
 			try {
-				Log.v("widget t411", "DÃ©finition de l'Intent");
+				Log.v("widget t411", "DŽfinition de l'Intent");
 
 				prefs = PreferenceManager.getDefaultSharedPreferences(context);
 				ratio = (ratio == null) ? prefs.getString("lastRatio", "?.??")
@@ -59,10 +57,6 @@ public class Widget_Full extends AppWidgetProvider {
 						"  ???.?? MB") : download;
 				mails = (mails == null) ? String.valueOf(prefs.getInt(
 						"lastMails", 0)) : mails;
-				username = (username == null || username == origusername) ? prefs
-						.getString("lastUsername", origusername) : username;
-				username = (username == null)?String.valueOf(prefs.getInt(
-						"lastUsername", 0)) : username;
 
 				switch (prefs.getInt("widgetAction", 5)) {
 				case 0:
@@ -97,16 +91,15 @@ public class Widget_Full extends AppWidgetProvider {
 				Log.e("widget t411 - lancement de l'Intent", ex.toString());
 			}
 
-			Log.v("widget t411", "mise Ã  jour des valeurs");
+			Log.v("widget t411", "mise ˆ jour des valeurs");
 			views.setTextViewText(R.id.updatedTime,
 					prefs.getString("lastDate", "?????"));
 			views.setTextViewText(R.id.wUpload, upload);
 			views.setTextViewText(R.id.wDownload, download);
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
-			views.setTextViewText(R.id.wUsername, username);
 
-			Log.v("widget t411", "mise Ã  jour du smiley");
+			Log.v("widget t411", "mise ˆ jour du smiley");
 			int smiley = R.drawable.smiley_unknown;
 			try {
 				double numRatio = Double.valueOf(ratio);
@@ -145,12 +138,7 @@ public class Widget_Full extends AppWidgetProvider {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.v("widget t411", "onReceive a reÃ§u le Broadcast Intent");
-
-		try {
-		username = context.getString(R.string.waiting_for_update);
-		origusername = username;
-		} finally{}
+		Log.v("widget t411", "onReceive a reu le Broadcast Intent");
 
 		try {
 			_ratio = intent.getStringExtra("ratio");
@@ -161,16 +149,14 @@ public class Widget_Full extends AppWidgetProvider {
 			download = (_download != null) ? _download : download;
 			_mails = intent.getStringExtra("mails");
 			mails = (_mails != null) ? _mails : mails;
-			_username = intent.getStringExtra("username");
-			username = (_username != null) ? _username : username;
 		} catch (Exception ex) {
 			Log.e("mise Ã  jour des donnÃ©es dapuis le service", ex.toString());
 		}
-		Log.v("widget t411", "mise Ã  jour forcÃ©e...");
+		Log.v("widget t411", "mise ˆ jour forcŽe...");
 		AppWidgetManager appWidgetManager = AppWidgetManager
 				.getInstance(context);
 		ComponentName thisAppWidget = new ComponentName(
-				context.getPackageName(), Widget_Full.class.getName());
+				context.getPackageName(), Widget_half.class.getName());
 		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 		onUpdate(context, appWidgetManager, appWidgetIds);
 	}

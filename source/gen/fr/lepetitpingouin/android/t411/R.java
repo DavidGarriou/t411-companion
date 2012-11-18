@@ -140,6 +140,7 @@ public final class R {
         public static final int activity_settings=0x7f030006;
         public static final int item_msglist=0x7f030007;
         public static final int widget_full=0x7f030008;
+        public static final int widget_half=0x7f030009;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
@@ -151,6 +152,8 @@ public final class R {
         public static final int active=0x7f060013;
         public static final int answer=0x7f060025;
         public static final int app_name=0x7f060000;
+        public static final int appwidget_full=0x7f060039;
+        public static final int appwidget_half=0x7f06003a;
         public static final int archive=0x7f060027;
         public static final int askWhatToDo=0x7f060032;
         public static final int btnStartService=0x7f060017;
@@ -196,7 +199,7 @@ public final class R {
         public static final int savedData=0x7f060016;
         public static final int service_settings=0x7f060008;
         public static final int show_notifs=0x7f06001d;
-        public static final int test_notif=0x7f060039;
+        public static final int test_notif=0x7f06003b;
         public static final int title_activity_main=0x7f060003;
         public static final int toggle_OFF=0x7f06000d;
         public static final int toggle_ON=0x7f06000c;
@@ -209,5 +212,6 @@ public final class R {
     }
     public static final class xml {
         public static final int widget_full_provider=0x7f040000;
+        public static final int widget_half_provider=0x7f040001;
     }
 }

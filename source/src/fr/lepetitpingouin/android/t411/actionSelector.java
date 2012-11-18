@@ -7,68 +7,72 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class actionSelector extends Activity{
-	
+public class actionSelector extends Activity {
+
 	LinearLayout btnOpen, btnUpdate, btnInbox, btnWeb, back;
-	
-	public void onPause()
-	{
+
+	@Override
+	public void onPause() {
 		super.onPause();
 		finish();
 	}
-	
+
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selector);
-        
-        back = (LinearLayout) findViewById(R.id.popupBg);
-        back.setOnClickListener(new View.OnClickListener() {
-			
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_selector);
+
+		back = (LinearLayout) findViewById(R.id.popupBg);
+		back.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
 			}
 		});
-        
-        btnOpen = (LinearLayout)findViewById(R.id.selectorOpen);
-        btnOpen.setOnClickListener(new View.OnClickListener() {
-			
+
+		btnOpen = (LinearLayout) findViewById(R.id.selectorOpen);
+		btnOpen.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myIntent = new Intent(actionSelector.this, MainActivity.class);
-        		actionSelector.this.startActivity(myIntent);
-        		finish();
+				Intent myIntent = new Intent(actionSelector.this,
+						MainActivity.class);
+				actionSelector.this.startActivity(myIntent);
+				finish();
 			}
 		});
-        
-        btnUpdate = (LinearLayout)findViewById(R.id.selectorUpdate);
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-			
+
+		btnUpdate = (LinearLayout) findViewById(R.id.selectorUpdate);
+		btnUpdate.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myIntent = new Intent(actionSelector.this, t411updater.class);
-        		actionSelector.this.startService(myIntent);
-        		finish();
+				Intent myIntent = new Intent(actionSelector.this,
+						t411updater.class);
+				actionSelector.this.startService(myIntent);
+				finish();
 			}
 		});
-        
-        btnInbox = (LinearLayout)findViewById(R.id.selectorInbox);
-        btnInbox.setOnClickListener(new View.OnClickListener() {
-			
+
+		btnInbox = (LinearLayout) findViewById(R.id.selectorInbox);
+		btnInbox.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myIntent = new Intent(actionSelector.this, messagesActivity.class);
-        		actionSelector.this.startActivity(myIntent);			}
+				Intent myIntent = new Intent(actionSelector.this,
+						messagesActivity.class);
+				actionSelector.this.startActivity(myIntent);
+			}
 		});
-        
-        btnWeb = (LinearLayout)findViewById(R.id.selectorWeb);
-        btnWeb.setOnClickListener(new View.OnClickListener() {
-			
+
+		btnWeb = (LinearLayout) findViewById(R.id.selectorWeb);
+		btnWeb.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
