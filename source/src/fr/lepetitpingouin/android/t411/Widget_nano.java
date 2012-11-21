@@ -16,12 +16,13 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
 
-public class Widget_Full extends AppWidgetProvider {
+public class Widget_nano extends AppWidgetProvider {
 
 	ImageButton updateBtn;
-	String ratio, upload, download, mails, username, origusername;
-	// Les mêmes, qui vont servir de tampon pour valider les données du service
-	String _ratio, _upload, _download, _mails, _username;
+	String ratio, upload, download, mails;
+	// Les mêmes, qui vont servir de tampon pour valider les données du
+	// service
+	String _ratio, _upload, _download, _mails;
 	Date date = new Date();
 	Intent myIntent = new Intent();
 	PendingIntent pIntent;
@@ -33,8 +34,6 @@ public class Widget_Full extends AppWidgetProvider {
 		Log.v("widget t411", "onUpdate");
 		final int N = appWidgetIds.length;
 
-		username = context.getString(R.string.waiting_for_update);
-		origusername = username;
 
 		// loop through all app widgets the user has enabled
 		for (int i = 0; i < N; i++) {
@@ -42,7 +41,7 @@ public class Widget_Full extends AppWidgetProvider {
 
 			// get our view so we can edit the time
 			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.widget_full);
+					R.layout.widget_mini);
 
 			date = new Date();
 
@@ -58,10 +57,6 @@ public class Widget_Full extends AppWidgetProvider {
 						"  ???.?? MB") : download;
 				mails = (mails == null) ? String.valueOf(prefs.getInt(
 						"lastMails", 0)) : mails;
-				username = (username == null || username == origusername) ? prefs
-						.getString("lastUsername", origusername) : username;
-				username = (username == null)?String.valueOf(prefs.getInt(
-						"lastUsername", 0)) : username;
 
 				switch (prefs.getInt("widgetAction", 5)) {
 				case 0:
@@ -97,15 +92,15 @@ public class Widget_Full extends AppWidgetProvider {
 			}
 
 			Log.v("widget t411", "mise à jour des valeurs");
+			
 			views.setTextViewText(R.id.updatedTime,
 					prefs.getString("lastDate", "?????"));
 			views.setTextViewText(R.id.wUpload, upload);
 			views.setTextViewText(R.id.wDownload, download);
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
-			views.setTextViewText(R.id.wUsername, username);
 
-			Log.v("widget t411", "mise √† jour du smiley");
+			Log.v("widget t411", "mise à jour du smiley");
 			int smiley = R.drawable.smiley_unknown;
 			try {
 				double numRatio = Double.valueOf(ratio);
@@ -130,6 +125,9 @@ public class Widget_Full extends AppWidgetProvider {
 				// l'invadroid
 				if (numRatio == 13.37)
 					smiley = R.drawable.smiley_leet;
+				
+				/*if(numRatio < Double.valueOf(prefs.getString("ratioMinimum", "0")))
+					views.setTextColor(R.id.wRatio, Color.RED);*/
 			} catch (Exception ex) {
 				Log.e("widget t411", ex.toString());
 			}
@@ -147,11 +145,6 @@ public class Widget_Full extends AppWidgetProvider {
 		Log.v("widget t411", "onReceive a reçu le Broadcast Intent");
 
 		try {
-		username = context.getString(R.string.waiting_for_update);
-		origusername = username;
-		} finally{}
-
-		try {
 			_ratio = intent.getStringExtra("ratio");
 			ratio = (_ratio != null) ? _ratio : ratio;
 			_upload = intent.getStringExtra("upload");
@@ -160,16 +153,14 @@ public class Widget_Full extends AppWidgetProvider {
 			download = (_download != null) ? _download : download;
 			_mails = intent.getStringExtra("mails");
 			mails = (_mails != null) ? _mails : mails;
-			_username = intent.getStringExtra("username");
-			username = (_username != null) ? _username : username;
 		} catch (Exception ex) {
-			Log.e("mise à jour des données dapuis le service", ex.toString());
+			Log.e("mise √† jour des donn√©es dapuis le service", ex.toString());
 		}
 		Log.v("widget t411", "mise à jour forcée...");
 		AppWidgetManager appWidgetManager = AppWidgetManager
 				.getInstance(context);
 		ComponentName thisAppWidget = new ComponentName(
-				context.getPackageName(), Widget_Full.class.getName());
+				context.getPackageName(), Widget_nano.class.getName());
 		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 		onUpdate(context, appWidgetManager, appWidgetIds);
 	}

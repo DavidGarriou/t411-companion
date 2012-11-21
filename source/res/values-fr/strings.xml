@@ -65,4 +65,9 @@
     <string name="donate">Faire un don (1€)</string>
 	<string name="considerDonate">Vous aimez l\'appli? Offrez-moi une bière ;o) !</string>
     
+	<string name="appwidget_huge">compagnon t411 (grand)</string>
+	<string name="appwidget_full">compagnon t411 (normal)</string>
+	<string name="appwidget_half">compagnon t411 (petit)</string>
+	<string name="appwidget_nano">compagnon t411 (mini)</string>
+	
 </resources>

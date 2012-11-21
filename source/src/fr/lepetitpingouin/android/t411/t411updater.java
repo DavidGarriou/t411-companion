@@ -113,6 +113,7 @@ public class t411updater extends Service {
 		alarmManager.cancel(pendingIntent);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void update(String login, String password) throws IOException {
 		Connection.Response res = null;
 		Document doc = null;
@@ -207,7 +208,7 @@ public class t411updater extends Service {
 						this.getString(R.string.notif_ratio_title) + " (< "
 								+ prefs.getString("ratioMinimum", "???") + ")",
 						this.getString(R.string.notif_ratio_content), true,
-						t411updater.class);
+						Settings.class);
 			else
 				cancelNotify(1990);
 		if (prefs.getBoolean("mailAlert", false))
@@ -221,6 +222,7 @@ public class t411updater extends Service {
 				cancelNotify(1991);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void createNotify(int number, int icon, String label, String title,
 			String description, boolean vibrate, Class<?> cls) {
 		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
