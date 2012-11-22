@@ -11,152 +11,185 @@
             android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/widget_top_background" >
-
-                <ImageView
-                    android:id="@+id/topLogo"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="3dip"
-                    android:src="@drawable/ic_launcher" />
+                android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dip"
-                    android:background="@drawable/widget_content_background"
-                    android:orientation="vertical"
-                    android:padding="4dip" >
+                    android:gravity="center"
+                    android:orientation="horizontal" >
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center" >
 
-                        <TextView
-                            android:id="@+id/wUsername"
+                        <LinearLayout
+                            android:id="@+id/topLogo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/default_username"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_blue"
-                            android:color="@color/t411_blue" />
+                            android:layout_marginTop="73dp"
+                            android:background="@drawable/bg_clock"
+                            android:orientation="vertical" >
 
-                        <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_weight="1"
-                            android:gravity="bottom|right"
-                            android:scaleType="fitEnd"
-                            android:src="@drawable/ic_mail" />
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="JEU. 22 NOVEMBRE"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="#FFF"
+                                android:textSize="12dp" />
 
-                        <TextView
-                            android:id="@+id/wMails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text=" ?"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_blue"
-                            android:color="@color/t411_blue" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/widget_content_background" >
 
-                    </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical" >
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical" >
+                                    <TextView
+                                        android:id="@+id/wUpload"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="↑ ???.?? GB"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/t411_green" />
 
-                        <TextView
-                            android:id="@+id/wUpload"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="↑ ???.?? GB"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_green" />
+                                    <TextView
+                                        android:id="@+id/wDownload"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="none"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:text="↓ ???.?? MB"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/t411_red" />
+                                </LinearLayout>
 
-                        <FrameLayout
-                            android:layout_width="1dip"
-                            android:layout_height="fill_parent"
-                            android:layout_margin="4dip"
-                            android:background="#33000000" >
-                        </FrameLayout>
+                                <TextView
+                                    android:id="@+id/wMails"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="32dip"
+                                    android:layout_marginRight="32dip"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/wl_mail_on"
+                                    android:gravity="top|center_horizontal"
+                                    android:text="2"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@color/t411_blue"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/wDownload"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="none"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="↓ ???.?? MB"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_red" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="right|center_vertical" >
 
-                        <FrameLayout
-                            android:layout_width="1dip"
-                            android:layout_height="fill_parent"
-                            android:layout_margin="4dp"
-                            android:background="#33000000" >
-                        </FrameLayout>
+                                    <TextView
+                                        android:id="@+id/wRatio"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical|right"
+                                        android:text=" ?.??"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:textColor="@color/t411_black"
+                                        android:textSize="24dp" />
 
-                        <TextView
-                            android:id="@+id/wRatio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:text=" ?.??"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_black" />
+                                    <ImageView
+                                        android:id="@+id/wSmiley"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/smiley_unknown" />
+                                </LinearLayout>
+                            </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/wSmiley"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_weight="1"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/smiley_unknown" />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/wUsername"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:shadowColor="#FFF"
+                                android:text="meyerglive"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="#FFF"
+                                android:textSize="12dp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/widget_btm_background" >
+                android:layout_gravity="center_horizontal" >
 
                 <TextView
-                    android:id="@+id/miseajour"
+                    android:id="@+id/TextView03"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dip"
-                    android:ellipsize="start"
-                    android:lines="1"
+                    android:gravity="center"
+                    android:textColor="#FFF"
                     android:text="@string/lastUpdate"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#0059ad"
-                    android:textSize="10dip" />
+                    android:textSize="6dp" />
 
                 <TextView
                     android:id="@+id/updatedTime"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dip"
-                    android:ellipsize="start"
-                    android:lines="1"
-                    android:text=" ???"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#0059ad"
-                    android:textSize="10dip" />
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:text="last update"
+                    android:textSize="6dp" />
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/wHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:shadowColor="#000"
+                android:text="13"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFF"
+                android:textSize="75dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/wMinutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:shadowColor="#000"
+                android:text=":37"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFF"
+                android:textSize="75dp" />
 
         </LinearLayout>
 

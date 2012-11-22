@@ -53,6 +53,16 @@
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/widget_nano_provider" />
 		</receiver>
+		<receiver android:name=".Widget_huge"
+			android:label="@string/appwidget_huge">
+			<intent-filter 
+			    android:priority="100" >
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+				<action android:name="android.intent.ACTION_TIME_CHANGED" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider"
+				android:resource="@xml/widget_huge_provider" />
+		</receiver>
 
 		<receiver
             android:name="Receiver">
