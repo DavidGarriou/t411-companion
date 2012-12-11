@@ -130,9 +130,9 @@ public class readMailActivity extends Activity {
 						.connect(DELURL + id)
 						.data("login", username, "password", password)
 						.method(Method.POST)
-						.userAgent(
-								"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(0) // illimité
+						//.userAgent(
+						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+						.timeout(15000) // 15 sec. 
 						.execute();
 
 				doc = res.parse();
@@ -180,9 +180,9 @@ public class readMailActivity extends Activity {
 						.connect(ARCURL + id)
 						.data("login", username, "password", password)
 						.method(Method.POST)
-						.userAgent(
-								"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(0) // illimité
+						//.userAgent(
+						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+						.timeout(15000) // 15 sec
 						.execute();
 
 				doc = res.parse();
@@ -226,9 +226,9 @@ public class readMailActivity extends Activity {
 						.connect(URL + id)
 						.data("login", username, "password", password)
 						.method(Method.POST)
-						.userAgent(
-								"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(0) // timeout illimité
+						//.userAgent(
+						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+						.timeout(15000) // timeout illimité
 						.execute();
 
 				doc = res.parse();

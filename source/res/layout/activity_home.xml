@@ -62,13 +62,16 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
+                    android:id="@+id/hWidget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dip"
+                    android:background="@drawable/widget_content_background"
                     android:orientation="vertical" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/hLogin"
@@ -76,12 +79,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Username"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/t411_blue"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/hMails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            
+                            android:textColor="#000"
+                            
                             android:text="(?)"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
@@ -95,6 +103,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            
+                            android:textColor="#000"
+                            
                             android:text="upload / download"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -102,8 +113,39 @@
                             android:id="@+id/hRatio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            
+                            android:textColor="#000"
+                            
                             android:text="Ratio"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/hGoLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00 GB"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/hGoLeftLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:text="@string/DownloadLeft"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888"
+                            android:textStyle="italic" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -179,6 +221,32 @@
                         android:layout_height="fill_parent"
                         android:gravity="center_vertical"
                         android:text="@string/button_service"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnStats"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/t411_btn"
+                    android:focusable="true" >
+
+                    <ImageView
+                        android:id="@+id/ImageView05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dip"
+                        android:src="@drawable/ic_stats" />
+
+                    <TextView
+                        android:id="@+id/TextView05"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/statistics"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>

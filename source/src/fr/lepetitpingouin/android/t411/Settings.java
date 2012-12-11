@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class Settings extends Activity {
 	CheckBox ratioAlert, mailAlert, notifAlert, autoUpdate;
 	EditText minimum, frequency;
 	LinearLayout btnStartService, btnWidgetAction;
+	ImageView topLogo;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -48,12 +50,11 @@ public class Settings extends Activity {
 			public void onClick(View v) {
 				// Perform action on click
 				try {
-					// stopService(new Intent(Settings.this,
-					// t411updater.class));
-					startService(new Intent(Settings.this, t411updater.class));
+					stopService(new Intent(Settings.this, t411updater.class));
 				} catch (Exception ex) {
 					Log.e("erreur service", ex.toString());
 				}
+				startService(new Intent(Settings.this, t411updater.class));
 			}
 		});
 
@@ -74,6 +75,16 @@ public class Settings extends Activity {
 				startService(new Intent(Settings.this, t411updater.class));
 
 				return;
+			}
+		});
+		
+		topLogo = (ImageView) findViewById(R.id.topLogo);
+		topLogo.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
 			}
 		});
 
@@ -117,7 +128,7 @@ public class Settings extends Activity {
 		});
 
 		minimum = (EditText) findViewById(R.id.editText1);
-		minimum.setText(prefs.getString("ratioMinimum", null));
+		minimum.setText(prefs.getString("ratioMinimum", "1"));
 		minimum.addTextChangedListener(new TextWatcher() {
 
 			@Override

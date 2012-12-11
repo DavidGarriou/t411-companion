@@ -1,5 +1,7 @@
 package fr.lepetitpingouin.android.t411;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.PendingIntent;
@@ -60,7 +62,7 @@ public class Widget_Full extends AppWidgetProvider {
 						"lastMails", 0)) : mails;
 				username = (username == null || username == origusername) ? prefs
 						.getString("lastUsername", origusername) : username;
-				username = (username == null)?String.valueOf(prefs.getInt(
+				username = (username == null) ? String.valueOf(prefs.getInt(
 						"lastUsername", 0)) : username;
 
 				switch (prefs.getInt("widgetAction", 5)) {
@@ -130,6 +132,12 @@ public class Widget_Full extends AppWidgetProvider {
 				// l'invadroid
 				if (numRatio == 13.37)
 					smiley = R.drawable.smiley_leet;
+				
+				//easter egg :) si on est le 25/12, on affiche le père noël-droid
+				if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+						&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 25)
+					smiley = R.drawable.smiley_xmas;
+				
 			} catch (Exception ex) {
 				Log.e("widget t411", ex.toString());
 			}
@@ -147,9 +155,10 @@ public class Widget_Full extends AppWidgetProvider {
 		Log.v("widget t411", "onReceive a reçu le Broadcast Intent");
 
 		try {
-		username = context.getString(R.string.waiting_for_update);
-		origusername = username;
-		} finally{}
+			username = context.getString(R.string.waiting_for_update);
+			origusername = username;
+		} finally {
+		}
 
 		try {
 			_ratio = intent.getStringExtra("ratio");

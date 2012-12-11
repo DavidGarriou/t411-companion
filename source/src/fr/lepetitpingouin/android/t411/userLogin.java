@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class userLogin extends Activity {
@@ -21,6 +22,7 @@ public class userLogin extends Activity {
 	// et on prépare les champs de l'interface
 	EditText login, passwd;
 	Button btn;
+	ImageView topLogo;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -38,6 +40,16 @@ public class userLogin extends Activity {
 		// préférences
 		login.setText(prefs.getString("login", null));
 		passwd.setText(prefs.getString("password", null));
+		
+		topLogo = (ImageView) findViewById(R.id.topLogo);
+		topLogo.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
 
 		btn = (Button) findViewById(R.id.btn_connect);
 		btn.setOnClickListener(new View.OnClickListener() {

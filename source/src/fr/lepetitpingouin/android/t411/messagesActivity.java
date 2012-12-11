@@ -12,7 +12,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -73,6 +75,10 @@ public class messagesActivity extends Activity {
 			}
 		});
 
+		try{
+			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(1991);
+		} finally{}
 		// Création d'une HashMap pour insérer les informations du premier item
 		// de notre listView
 		map = new HashMap<String, String>();
@@ -127,9 +133,9 @@ public class messagesActivity extends Activity {
 						.connect(CONNECTURL)
 						.data("login", username, "password", password)
 						.method(Method.POST)
-						.userAgent(
-								"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(0) // timeout illimité
+						//.userAgent(
+						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+						.timeout(15000) 
 						.execute();
 				doc = res.parse();
 

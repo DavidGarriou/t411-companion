@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.lepetitpingouin.android.t411"
-    android:versionCode="10"
-    android:versionName="0.9.1 beta">
+    android:versionCode="17"
+    android:versionName="0.9.5 beta (bugfix)" android:installLocation="internalOnly">
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -13,9 +13,9 @@
     
 
     <application
-        android:icon="@drawable/ic_new"
+        android:icon="@drawable/ic_newlauncher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar" android:allowBackup="true">
+        android:theme="@android:style/Theme.NoTitleBar" android:allowBackup="true" android:persistent="true" android:restoreAnyVersion="true">
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
@@ -56,9 +56,10 @@
 		<receiver android:name=".Widget_huge"
 			android:label="@string/appwidget_huge">
 			<intent-filter 
-			    android:priority="100" >
+			    android:priority="175" >
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-				<action android:name="android.intent.ACTION_TIME_CHANGED" />
+				<action android:name="android.intent.action.USER_PRESENT" />
+				
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider"
 				android:resource="@xml/widget_huge_provider" />
@@ -71,11 +72,13 @@
             </intent-filter>
          </receiver>
         <activity android:name="Settings" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <service android:name="t411updater" android:label="t411updateService" android:process=":t411Service"></service>
+        <service android:name="t411updater" android:label="t411updateService" android:process=":remote" ></service>
         <activity android:name="userLogin"></activity>
         <activity android:name="messagesActivity"
             android:configChanges="orientation" ></activity>
-        <activity android:name="aboutActivity"></activity>
+        <activity android:name="statsActivity"
+            android:configChanges="orientation" ></activity>
+        <activity android:name="aboutActivity" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:name="readMailActivity"
             android:configChanges="orientation"></activity>
         <activity android:name="actionSelector"

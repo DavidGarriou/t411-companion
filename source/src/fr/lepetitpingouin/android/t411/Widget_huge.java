@@ -1,18 +1,19 @@
 package fr.lepetitpingouin.android.t411;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -64,7 +65,7 @@ public class Widget_huge extends AppWidgetProvider {
 						"lastMails", 0)) : mails;
 				username = (username == null || username == origusername) ? prefs
 						.getString("lastUsername", origusername) : username;
-				username = (username == null)?String.valueOf(prefs.getInt(
+				username = (username == null) ? String.valueOf(prefs.getInt(
 						"lastUsername", 0)) : username;
 
 				switch (prefs.getInt("widgetAction", 5)) {
@@ -99,6 +100,47 @@ public class Widget_huge extends AppWidgetProvider {
 			} catch (Exception ex) {
 				Log.e("widget t411 - lancement de l'Intent", ex.toString());
 			}
+			
+			try{
+				PackageManager packageManager = context.getPackageManager();
+				Intent alarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
+	
+				// Verify clock implementation
+				String clockImpls[][] = {
+				        {"HTC Alarm Clock", "com.htc.android.worldclock", "com.htc.android.worldclock.WorldClockTabControl" },
+				        {"Standar Alarm Clock", "com.android.deskclock", "com.android.deskclock.AlarmClock"},
+				        {"Froyo Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclock.DeskClock"},
+				        {"Moto Blur Alarm Clock", "com.motorola.blur.alarmclock",  "com.motorola.blur.alarmclock.AlarmClock"},
+				        {"Samsung Galaxy Clock", "com.sec.android.app.clockpackage","com.sec.android.app.clockpackage.ClockPackage"}
+				};
+	
+				boolean foundClockImpl = false;
+	
+				for(int j=0; j<clockImpls.length; j++) {
+				    String vendor = clockImpls[j][0];
+				    String packageName = clockImpls[j][1];
+				    String className = clockImpls[j][2];
+				    try {
+				        ComponentName cn = new ComponentName(packageName, className);
+				        ActivityInfo aInfo = packageManager.getActivityInfo(cn, PackageManager.GET_META_DATA);
+				        alarmClockIntent.setComponent(cn);
+				        Log.d("","Found " + vendor + " --> " + packageName + "/" + className);
+				        foundClockImpl = true;
+				    } catch (NameNotFoundException e) {
+				        Log.d("",vendor + " does not exists");
+				    }
+				}
+	
+				if (foundClockImpl) {
+				    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmClockIntent, 0);
+				        // add pending intent to your component
+				    views.setOnClickPendingIntent(R.id.wClock, pendingIntent);
+				}
+			}
+			catch (Exception ex) {
+				Log.e("Clock exception :",ex.toString());
+			}
+			
 
 			Log.v("widget t411", "mise ˆ jour des valeurs");
 			views.setTextViewText(R.id.updatedTime,
@@ -108,14 +150,22 @@ public class Widget_huge extends AppWidgetProvider {
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
 			views.setTextViewText(R.id.wUsername, username);
-			
-			//updating time
-			views.setTextViewText(R.id.wHour, String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)));
-			
+
+			// updating time
+			views.setTextViewText(
+					R.id.wHour,
+					String.valueOf(Calendar.getInstance().get(
+							Calendar.HOUR_OF_DAY)));
+
 			int minutes = Calendar.getInstance().get(Calendar.MINUTE);
+
+			String sMinutes = (minutes < 10) ? "0" + minutes : String
+					.valueOf(minutes);
+			views.setTextViewText(R.id.wMinutes, ":" + sMinutes);
 			
-			String sMinutes = (minutes < 10)?"0"+minutes:String.valueOf(minutes);
-			views.setTextViewText(R.id.wMinutes, ":"+sMinutes);
+			String sDate = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+			
+			views.setTextViewText(R.id.wDate, sDate.toUpperCase());
 
 			Log.v("widget t411", "mise Ã  jour du smiley");
 			int smiley = R.drawable.smiley_unknown;
@@ -142,6 +192,10 @@ public class Widget_huge extends AppWidgetProvider {
 				// l'invadroid
 				if (numRatio == 13.37)
 					smiley = R.drawable.smiley_leet;
+				//easter egg :) si on est le 25/12, on affiche le pre no‘l-droid
+				if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+						&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 25)
+					smiley = R.drawable.smiley_xmas;
 			} catch (Exception ex) {
 				Log.e("widget t411", ex.toString());
 			}
@@ -149,24 +203,21 @@ public class Widget_huge extends AppWidgetProvider {
 
 			Log.v("widget t411", "refresh du widget");
 			// update the widget
-			appWidgetManager.updateAppWidget(widgetId, views); 
+			appWidgetManager.updateAppWidget(widgetId, views);
 		}
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Intent intent2 = new Intent("android.intent.ACTION_TIME_CHANGED");
-		PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent2, 0);
-		AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
-		am.cancel(pi); // cancel any existing alarms
-		am.setRepeating(AlarmManager.RTC, 2000, 2000, pi);
-		
-		Log.v("widget t411", "onReceive a reu le Broadcast Intent : "+intent.getAction());
+
+		Log.v("widget t411",
+				"onReceive a reu le Broadcast Intent : " + intent.getAction());
 
 		try {
-		username = context.getString(R.string.waiting_for_update);
-		origusername = username;
-		} finally{}
+			username = context.getString(R.string.waiting_for_update);
+			origusername = username;
+		} finally {
+		}
 
 		try {
 			_ratio = intent.getStringExtra("ratio");
@@ -188,6 +239,6 @@ public class Widget_huge extends AppWidgetProvider {
 		ComponentName thisAppWidget = new ComponentName(
 				context.getPackageName(), Widget_huge.class.getName());
 		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
-		onUpdate(context, appWidgetManager, appWidgetIds);	
+		onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 }

@@ -10,16 +10,16 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:background="@drawable/main_wallpaper"
+            android:background="#000"
             android:focusableInTouchMode="true"
             android:nextFocusRight="@id/ImageView02" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/topLogo"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/t411" />
+                android:src="@drawable/ic_back" />
 
             <TextView
                 android:id="@+id/textView1"

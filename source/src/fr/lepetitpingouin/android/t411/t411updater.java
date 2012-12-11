@@ -17,6 +17,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.IBinder;
@@ -28,24 +29,50 @@ public class t411updater extends Service {
 
 	public Integer mails, oldmails;
 	public double ratio;
-	public String upload, download, username, conError = "";
+	public String upload, download, username, conError = "", usernumber;
 
 	AlarmManager alarmManager;
 	PendingIntent pendingIntent;
 
 	SharedPreferences prefs;
+	BroadcastReceiver bR;
 
 	int freq; // frŽquence de rafraichissement (en minutes)
 
 	Intent i = new Intent("android.appwidget.action.APPWIDGET_UPDATE");
 
 	// La page de login t411 :
-	static final String CONNECTURL = "http://www.t411.me/users/login/";
+	static final String CONNECTURL = "http://www.t411.me/users/login/?returnto=%2Fusers%2Fprofile%2F";
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+				
 		Log.v("Service t411", "onStartCommand");
 
+		Log.v("Service t411","Trying to register ACTION_TIME_TICK");
+		bR = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				sendBroadcast(new Intent(
+						"android.appwidget.action.APPWIDGET_UPDATE"));
+				Log.v("ACTION_TIME_TICK", "Clock updated !");
+			}
+		};
+		
+		IntentFilter iF = new IntentFilter(Intent.ACTION_TIME_TICK);
+		
+		try{ // on essaye de dŽsenregistrer le receiver pour Žviter les doublons
+			unregisterReceiver(bR);
+			}
+		catch(Exception ex){
+			Log.e("Cancel receiver :",ex.toString());
+		}
+		try {
+			registerReceiver(bR, iF);
+		} catch (Exception ex){Log.e("registerReceiver",ex.toString());}
+
+		Log.v("Service t411","Trying to register ACTION_TIME_TICK : OK");
+		
 		// on charge les prŽfŽrences de l'application
 		prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
@@ -59,8 +86,7 @@ public class t411updater extends Service {
 					t411updater.class);
 
 		try {
-			// DŽtection du changement de configuration utilisateur : si la
-			// config a changŽ, on dŽgomme le cookie
+			// Mise ˆ jour
 			update(prefs.getString("login", ""),
 					prefs.getString("password", ""));
 		} catch (Exception ex) {
@@ -90,32 +116,44 @@ public class t411updater extends Service {
 		try {
 			// on annule l'alarme existante
 			alarmManager.cancel(pendingIntent);
-
-			// ...et on la reprogramme, si la config utilisateur le permet
-			if (prefs.getBoolean("autoUpdate", false))
-				alarmManager.set(AlarmManager.RTC_WAKEUP,
-						calendar.getTimeInMillis(), pendingIntent);
 		} catch (Exception ex) {
 			Log.e("AlarmManager", ex.toString());
 		}
+		
+		// ...et on la reprogramme, si la config utilisateur le permet
+		if (prefs.getBoolean("autoUpdate", false))
+			alarmManager.set(AlarmManager.RTC_WAKEUP,
+					calendar.getTimeInMillis(), pendingIntent);
 
 		try {
 			// annuler la notification de mise ˆ jour
 			cancelNotify(1992);
 		} finally {
+			//stopSelf();
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	public void onDestroy() {
-		Log.d(this.getClass().getName(), "onDestroy");
+		Log.v(this.getClass().getName(), "onDestroy");
 		// ˆ l'arret, annuler les rŽpŽtitions
 		alarmManager.cancel(pendingIntent);
+		cancelNotify(1990);
+		cancelNotify(1991);
+		cancelNotify(1992);
+		
+		try{
+			unregisterReceiver(bR);
+			}
+		catch(Exception ex){
+			Log.e("Cancel receiver :",ex.toString());
+		}
 	}
 
 	@SuppressWarnings("deprecation")
 	public void update(String login, String password) throws IOException {
+		Log.v("Service t411","Update()...");
 		Connection.Response res = null;
 		Document doc = null;
 		// on exŽcute la requte HTTP, en passant le login et le password en
@@ -124,11 +162,13 @@ public class t411updater extends Service {
 				.connect(CONNECTURL)
 				.data("login", login, "password", password)
 				.method(Method.POST)
-				.userAgent(
-						"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-				.timeout(0) // timeout illimitŽ
+				//.userAgent(
+				//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+				.timeout(15000) // timeout 15s pour Žviter de figer le service
 				.execute();
 
+		Log.v("Service t411","JSoup exŽcutŽ");
+		
 		doc = res.parse();
 
 		// on rŽcupre l'erreur de connexion, le cas ŽchŽant
@@ -163,6 +203,11 @@ public class t411updater extends Service {
 			mails = Integer.valueOf(doc.select(".mail  > strong").first()
 					.text());
 			Log.v("mails (aprs check) :", mails.toString());
+			
+			// On rŽcupre aussi le N¡ utilisateur pour les statistiques
+			String[] tmp = doc.select(".ajax").attr("href").split("=");
+			usernumber = tmp[1];
+			Log.v("user number = ",usernumber);
 
 			// on stocke tout ce petit monde (si non nul) dans les prŽfŽrences
 			Editor editor = prefs.edit();
@@ -174,10 +219,27 @@ public class t411updater extends Service {
 				editor.putString("lastDownload", download);
 			if (ratio != Double.NaN)
 				editor.putString("lastRatio", String.valueOf(ratio));
+			editor.putString("usernumber", usernumber);
 
 			Date date = new Date();
 			editor.putString("lastDate", date.toLocaleString());
 			editor.putString("lastUsername", username);
+			
+			/*// ---> transferred to MainActivity.java
+			// Calcul du restant possible tŽlŽchargeable avant d'atteindre la limite de ratio fixŽe
+			double upData = getGigaOctetData(upload);
+			double dlData = getGigaOctetData(download); 
+			
+			double lowRatio = Double.valueOf(prefs.getString("ratioMinimum", "1"));
+			
+			double beforeLimit = (upData-dlData*lowRatio)/lowRatio;
+			
+			String GoLeft = String.format("%.2f", beforeLimit)+" GB";
+			
+			editor.putString("GoLeft", (beforeLimit > 0)?GoLeft:"0 GB");
+			Log.v("Restant a tŽlŽcharger :", GoLeft);
+			*/
+			
 
 			editor.commit();
 
@@ -198,8 +260,20 @@ public class t411updater extends Service {
 				Log.v("Broadcast Sender", ex.toString());
 			}
 		}
-
 	}
+	
+	/*public Double getGigaOctetData(String value) {		
+		String[] array = value.split(" ");
+		double data = Double.valueOf(array[1]);
+		
+		if(array[2].contains("MB")) // Mega-octet => ^2
+			data = data/1024;
+		if(array[2] == "TB") // Tera-octet => ^4
+			data = data*1024;
+		Log.v(array[1],String.valueOf(data));
+		
+		return data;
+	}*/
 
 	public void doNotify() {
 		if (prefs.getBoolean("ratioAlert", false))

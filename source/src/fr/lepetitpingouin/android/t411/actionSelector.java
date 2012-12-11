@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -50,10 +51,12 @@ public class actionSelector extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent myIntent = new Intent(actionSelector.this,
-						t411updater.class);
-				actionSelector.this.startService(myIntent);
+				try {
+					stopService(new Intent(actionSelector.this, t411updater.class));
+				} catch (Exception ex) {
+					Log.e("erreur service", ex.toString());
+				}
+				startService(new Intent(actionSelector.this, t411updater.class));
 				finish();
 			}
 		});

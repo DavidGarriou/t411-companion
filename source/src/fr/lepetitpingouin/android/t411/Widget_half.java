@@ -1,5 +1,6 @@
 package fr.lepetitpingouin.android.t411;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.PendingIntent;
@@ -33,7 +34,6 @@ public class Widget_half extends AppWidgetProvider {
 			int[] appWidgetIds) {
 		Log.v("widget t411", "onUpdate");
 		final int N = appWidgetIds.length;
-
 
 		// loop through all app widgets the user has enabled
 		for (int i = 0; i < N; i++) {
@@ -124,6 +124,10 @@ public class Widget_half extends AppWidgetProvider {
 				// l'invadroid
 				if (numRatio == 13.37)
 					smiley = R.drawable.smiley_leet;
+				//easter egg :) si on est le 25/12, on affiche le pre no‘l-droid
+				if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+						&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 25)
+					smiley = R.drawable.smiley_xmas;
 			} catch (Exception ex) {
 				Log.e("widget t411", ex.toString());
 			}
