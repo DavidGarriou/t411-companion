@@ -27,6 +27,10 @@ public class readMailActivity extends Activity {
 	public final String ARCURL = "http://www.t411.me/users/login/?returnto=%2Fmailbox%2Farchive%2F%3Fid%3D";
 
 	SharedPreferences prefs;
+	
+	mailDeleter mD;
+	mailArchiver mA;
+	mailGetter mG;
 
 	ProgressDialog dialog;
 
@@ -35,12 +39,23 @@ public class readMailActivity extends Activity {
 	WebView tvmsg;
 
 	String t411message = "???";
+	
+	public void onDestroy() {
+		mD.cancel(true);
+		mA.cancel(true);
+		mG.cancel(true);
+		super.onDestroy();
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msgread);
+		
+		mD = new mailDeleter();
+		mA = new mailArchiver();
+		mG = new mailGetter();
 
 		prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
@@ -87,8 +102,8 @@ public class readMailActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
-				new mailDeleter().execute();
+				mD = new mailDeleter();
+				mD.execute();
 			}
 		});
 
@@ -98,11 +113,12 @@ public class readMailActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new mailArchiver().execute();
+				mA = new mailArchiver();
+				mA.execute();
 			}
 		});
 
-		new mailGetter().execute();
+		mG.execute();
 	}
 
 	private class mailDeleter extends AsyncTask<Void, String[], Void> {
@@ -132,7 +148,9 @@ public class readMailActivity extends Activity {
 						.method(Method.POST)
 						//.userAgent(
 						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(15000) // 15 sec. 
+						.timeout(10000) 
+						.ignoreHttpErrors(true)
+						.ignoreContentType(true)
 						.execute();
 
 				doc = res.parse();
@@ -182,7 +200,9 @@ public class readMailActivity extends Activity {
 						.method(Method.POST)
 						//.userAgent(
 						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(15000) // 15 sec
+						.timeout(10000) 
+						.ignoreHttpErrors(true)
+						.ignoreContentType(true)
 						.execute();
 
 				doc = res.parse();
@@ -228,7 +248,9 @@ public class readMailActivity extends Activity {
 						.method(Method.POST)
 						//.userAgent(
 						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(15000) // timeout illimité
+						.timeout(10000) 
+						.ignoreHttpErrors(true)
+						.ignoreContentType(true)
 						.execute();
 
 				doc = res.parse();

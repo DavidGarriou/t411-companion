@@ -35,6 +35,8 @@ public class messagesActivity extends Activity {
 	public ProgressDialog dialog;
 
 	SharedPreferences prefs;
+	
+	mailFetcher mF;
 
 	Map<String, String> cookies;
 
@@ -50,12 +52,17 @@ public class messagesActivity extends Activity {
 		update();
 		super.onResume();
 	}
+	
+	public void onDestroy() {
+		mF.cancel(true);
+		super.onDestroy();
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_msglist);
-
+		
 		prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
@@ -106,15 +113,23 @@ public class messagesActivity extends Activity {
 	public void update() {
 		dialog = ProgressDialog.show(this, this.getString(R.string.getMesages),
 				this.getString(R.string.pleasewait), true, true);
-
-		new mailFetcher().execute();
+		mF = new mailFetcher();
+		mF.execute();
 	}
 
 	private class mailFetcher extends AsyncTask<Void, String[], Void> {
+		
+		Connection.Response res = null;
+		Document doc = null;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+		}
+		
+		protected void onCancelled() {
+			this.cancel(true);
+			super.onCancelled();
 		}
 
 		@Override
@@ -125,8 +140,7 @@ public class messagesActivity extends Activity {
 					.getString("password", "");
 			Log.v("Credentials :", username + "/" + password);
 
-			Connection.Response res = null;
-			Document doc = null;
+			
 
 			try {
 				res = Jsoup
@@ -135,34 +149,13 @@ public class messagesActivity extends Activity {
 						.method(Method.POST)
 						//.userAgent(
 						//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
-						.timeout(15000) 
+						.timeout(10000) 
+						.ignoreHttpErrors(true)
+						.ignoreContentType(true)
 						.execute();
 				doc = res.parse();
 
-				try {
-					for (Element table : doc.select("table.mailbox tbody")) {
-						for (Element row : table.select("tr")) {
-							Elements tds = row.select("td");
-							// Log.e("Test TD = ",tds.get(1).text());
-							int mailStatus;
-							if (row.hasAttr("class"))
-								mailStatus = R.drawable.mail_unread;
-							else
-								mailStatus = R.drawable.mail_read;
-							Log.v("export de la ligne " + tds.get(2).text(),
-									row.className());
-							map = new HashMap<String, String>();
-							map.put("de", tds.get(1).text());
-							map.put("objet", tds.get(2).text());
-							map.put("etat", String.valueOf(mailStatus));
-							map.put("id", tds.get(0).select("input").val());
-							map.put("date", tds.get(3).text());
-							listItem.add(map);
-						}
-					}
-				} catch (Exception ex) {
-					Log.e("Erreur test TD", ex.toString());
-				}
+				
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -172,11 +165,37 @@ public class messagesActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 			dialog.cancel();
+			
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
+			
+			try {
+				for (Element table : doc.select("table.mailbox tbody")) {
+					for (Element row : table.select("tr")) {
+						Elements tds = row.select("td");
+						// Log.e("Test TD = ",tds.get(1).text());
+						int mailStatus;
+						if (row.hasAttr("class"))
+							mailStatus = R.drawable.mail_unread;
+						else
+							mailStatus = R.drawable.mail_read;
+						Log.v("export de la ligne " + tds.get(2).text(),
+								row.className());
+						map = new HashMap<String, String>();
+						map.put("de", tds.get(1).text());
+						map.put("objet", tds.get(2).text());
+						map.put("etat", String.valueOf(mailStatus));
+						map.put("id", tds.get(0).select("input").val());
+						map.put("date", tds.get(3).text());
+						listItem.add(map);
+					}
+				}
+			} catch (Exception ex) {
+				Log.e("Erreur test TD", ex.toString());
+			}
 			// Création d'un SimpleAdapter qui se chargera de mettre les items
 			// présent dans notre list (listItem) dans la vue affichageitem
 			SimpleAdapter mSchedule = new SimpleAdapter(

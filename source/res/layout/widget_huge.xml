@@ -15,12 +15,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -133,7 +127,7 @@
 
                     </RelativeLayout>
 
-                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -165,7 +159,7 @@
 	                android:shadowDx="1"
 	                android:shadowDy="1"
 	                android:shadowRadius="2"
-                    android:text="last update"
+                    android:text="---"
                     android:textSize="10dp" />
             </LinearLayout>
 
@@ -175,8 +169,8 @@
             android:id="@+id/wClock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center" >
+            android:layout_gravity="center_horizontal|top"
+            android:gravity="top" >
 
             <TextView
                 android:id="@+id/wHour"
@@ -187,7 +181,7 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="13"
+                android:text="--"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#FFF"
                 android:textSize="75dp"
@@ -202,7 +196,7 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text=":37"
+                android:text=":--"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#FFF"
                 android:textSize="75dp" />
