@@ -4,6 +4,11 @@
     <color name="t411_red">#b40000</color>
     <color name="t411_green">#129b00</color>
     <color name="t411_black">#000000</color>
+    <color name="t411_purple">#9900ad</color>
+    <color name="t411_gold">#f4a140</color>
+    <color name="t411_grey">#787878</color>
+    <color name="t411_darkred">#c90900</color>
+    <color name="t411_salmon">#fe3333</color>
     
     <string name="app_name">t411 companion</string>
     <string name="hello_world">Hello world!</string>
@@ -69,10 +74,11 @@
     <string name="donate">Buy me a beer ! ;o)</string>
 	<string name="considerDonate">Enjoy the app? consider donating € 1 !</string>
     
-	<string name="appwidget_huge">t411 companion (clock)</string>
+	<string name="appwidget_huge">t411 Clock</string>
 	<string name="appwidget_full">t411 companion (standard)</string>
 	<string name="appwidget_half">t411 companion (mini)</string>
-	<string name="appwidget_nano">t411 companion (nano)</string>
+	<string name="appwidget_nano">t411 companion (1x1)</string>
+	<string name="appwidget_plus">t411 companion (+)</string>
 	
 	<string name="dateFormat">"EEE LLLL d"</string>
 	

@@ -208,9 +208,44 @@ public class t411updater extends Service {
 			String[] tmp = doc.select(".ajax").attr("href").split("=");
 			usernumber = tmp[1];
 			Log.v("user number = ",usernumber);
-
+			
+			// tŽlŽchargements (24h)
+			Log.d("DT","----------------------------");
+			
+			String classe = "";//doc.select(".block > div > dl > dt").get(0).text();
+			classe += doc.select(".block > div > dl > dd").get(0).text();
+			Log.d("Classe",classe);
+			
+			String up24 = "";//doc.select(".block > div > dl > dt").get(10).text();
+			up24 += doc.select(".block > div > dl > dd").get(10).text();
+			Log.d("DT",up24);
+			
+			String dl24 = "";//doc.select(".block > div > dl > dt").get(11).text();
+			dl24 += doc.select(".block > div > dl > dd").get(11).text();
+			Log.d("DD",dl24);
+			
+			// Calcul du restant possible tŽlŽchargeable avant d'atteindre la limite de ratio fixŽe
+			double beforeLimit = 0;
+			try{
+			double upData = getGigaOctetData(prefs.getString("lastUpload", "U 0 GB"));
+			double dlData = getGigaOctetData(prefs.getString("lastDownload", "D 0 GB")); 
+			
+			double lowRatio = Double.valueOf(prefs.getString("ratioMinimum", "1"));
+			
+			beforeLimit = (upData-dlData*lowRatio)/lowRatio;
+			} catch (Exception ex){}
+			String GoLeft = null;
+			
+			// Prise en compte des quantitŽs restantes en Tera-octets 
+			GoLeft = (beforeLimit > 500)?String.format("%.2f", beforeLimit/1024)+" TB":String.format("%.2f", beforeLimit)+" GB";
+			
 			// on stocke tout ce petit monde (si non nul) dans les prŽfŽrences
 			Editor editor = prefs.edit();
+			editor.putString("classe", classe);
+			editor.putString("up24", up24);
+			editor.putString("dl24", dl24);
+			editor.putString("GoLeft", (beforeLimit > 0)?GoLeft:"0 GB");
+			
 			if (mails != null)
 				editor.putInt("lastMails", mails);
 			if (upload != null)
@@ -224,22 +259,6 @@ public class t411updater extends Service {
 			Date date = new Date();
 			editor.putString("lastDate", date.toLocaleString());
 			editor.putString("lastUsername", username);
-			
-			/*// ---> transferred to MainActivity.java
-			// Calcul du restant possible tŽlŽchargeable avant d'atteindre la limite de ratio fixŽe
-			double upData = getGigaOctetData(upload);
-			double dlData = getGigaOctetData(download); 
-			
-			double lowRatio = Double.valueOf(prefs.getString("ratioMinimum", "1"));
-			
-			double beforeLimit = (upData-dlData*lowRatio)/lowRatio;
-			
-			String GoLeft = String.format("%.2f", beforeLimit)+" GB";
-			
-			editor.putString("GoLeft", (beforeLimit > 0)?GoLeft:"0 GB");
-			Log.v("Restant a tŽlŽcharger :", GoLeft);
-			*/
-			
 
 			editor.commit();
 
@@ -262,18 +281,20 @@ public class t411updater extends Service {
 		}
 	}
 	
-	/*public Double getGigaOctetData(String value) {		
-		String[] array = value.split(" ");
-		double data = Double.valueOf(array[1]);
-		
-		if(array[2].contains("MB")) // Mega-octet => ^2
-			data = data/1024;
-		if(array[2] == "TB") // Tera-octet => ^4
-			data = data*1024;
-		Log.v(array[1],String.valueOf(data));
-		
+	public Double getGigaOctetData(String value) {
+		double data;
+		try{
+			String[] array = value.split(" ");
+			data = Double.valueOf(array[1]);
+			
+			if(array[2].contains("MB")) // Mega-octet
+				data = data/1024;
+			if(array[2] == "TB") // Tera-octet
+				data = data*1024;
+			Log.v(array[1],String.valueOf(data));
+		} catch(Exception e) {data = 0;}
 		return data;
-	}*/
+	}
 
 	public void doNotify() {
 		if (prefs.getBoolean("ratioAlert", false))

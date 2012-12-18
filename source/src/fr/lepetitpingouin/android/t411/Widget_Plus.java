@@ -1,6 +1,5 @@
 package fr.lepetitpingouin.android.t411;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,18 +10,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
 
-public class Widget_huge extends AppWidgetProvider {
+public class Widget_Plus extends AppWidgetProvider {
 
 	ImageButton updateBtn;
 	String ratio, upload, download, mails, username, origusername;
@@ -48,7 +43,16 @@ public class Widget_huge extends AppWidgetProvider {
 
 			// get our view so we can edit the time
 			RemoteViews views = new RemoteViews(context.getPackageName(),
-					R.layout.widget_huge);
+					R.layout.widget_plus);
+			if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+					&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 22 && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 27)
+				views.setImageViewResource(R.id.topLogo, R.drawable.ic_xmas);
+			
+			if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+					&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 0 && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 23)
+				views.setImageViewResource(R.id.topLogo, R.drawable.ic_xmastree);
+
+
 			date = new Date();
 
 			try {
@@ -101,46 +105,8 @@ public class Widget_huge extends AppWidgetProvider {
 				Log.e("widget t411 - lancement de l'Intent", ex.toString());
 			}
 			
-			try{
-				PackageManager packageManager = context.getPackageManager();
-				Intent alarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
-	
-				// Verify clock implementation
-				String clockImpls[][] = {
-				        {"HTC Alarm Clock", "com.htc.android.worldclock", "com.htc.android.worldclock.WorldClockTabControl" },
-				        {"Standar Alarm Clock", "com.android.deskclock", "com.android.deskclock.AlarmClock"},
-				        {"Froyo Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclock.DeskClock"},
-				        {"Moto Blur Alarm Clock", "com.motorola.blur.alarmclock",  "com.motorola.blur.alarmclock.AlarmClock"},
-				        {"Samsung Galaxy Clock", "com.sec.android.app.clockpackage","com.sec.android.app.clockpackage.ClockPackage"}
-				};
-	
-				boolean foundClockImpl = false;
-	
-				for(int j=0; j<clockImpls.length; j++) {
-				    String vendor = clockImpls[j][0];
-				    String packageName = clockImpls[j][1];
-				    String className = clockImpls[j][2];
-				    try {
-				        ComponentName cn = new ComponentName(packageName, className);
-				        ActivityInfo aInfo = packageManager.getActivityInfo(cn, PackageManager.GET_META_DATA);
-				        alarmClockIntent.setComponent(cn);
-				        Log.d("","Found " + vendor + " --> " + packageName + "/" + className);
-				        foundClockImpl = true;
-				    } catch (NameNotFoundException e) {
-				        Log.d("",vendor + " does not exists");
-				    }
-				}
-	
-				if (foundClockImpl) {
-				    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmClockIntent, 0);
-				        // add pending intent to your component
-				    views.setOnClickPendingIntent(R.id.wClock, pendingIntent);
-				}
-			}
-			catch (Exception ex) {
-				Log.e("Clock exception :",ex.toString());
-			}
-			
+			views.setOnClickPendingIntent(R.id.wbtn_config, PendingIntent.getActivity(context, 0, new Intent().setClassName("fr.lepetitpingouin.android.t411", "fr.lepetitpingouin.android.t411.Settings"), 0));
+			views.setOnClickPendingIntent(R.id.wbtn_refresh, PendingIntent.getService(context, 0, new Intent().setClassName("fr.lepetitpingouin.android.t411", "fr.lepetitpingouin.android.t411.t411updater"), 0));
 
 			Log.v("widget t411", "mise ˆ jour des valeurs");
 			views.setTextViewText(R.id.updatedTime,
@@ -149,23 +115,26 @@ public class Widget_huge extends AppWidgetProvider {
 			views.setTextViewText(R.id.wDownload, download);
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
-			views.setTextViewText(R.id.wUsername, username);			
-
-			// updating time
-			views.setTextViewText(
-					R.id.wHour,
-					String.valueOf(Calendar.getInstance().get(
-							Calendar.HOUR_OF_DAY)));
-
-			int minutes = Calendar.getInstance().get(Calendar.MINUTE);
-
-			String sMinutes = (minutes < 10) ? "0" + minutes : String
-					.valueOf(minutes);
-			views.setTextViewText(R.id.wMinutes, ":" + sMinutes);
+			views.setTextViewText(R.id.wUsername, username);
+			views.setTextViewText(R.id.wGoLeft, prefs.getString("GoLeft", "0 GB"));
+			views.setTextViewText(R.id.up24, prefs.getString("up24", "..."));
+			views.setTextViewText(R.id.dl24, prefs.getString("dl24", "..."));
+			views.setTextViewText(R.id.wClasse, " ("+prefs.getString("classe", "???")+")");
 			
-			String sDate = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+			views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_blue));
 			
-			views.setTextViewText(R.id.wDate, sDate.toUpperCase());
+			if(prefs.getString("classe", "???").contains("Power Seeder"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_purple));
+			if(prefs.getString("classe", "???").contains("Uploader"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_gold));
+			if(prefs.getString("classe", "???").contains("Team Pending"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_grey));
+			if(prefs.getString("classe", "???").contains("ModŽrateur"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_black));
+			if(prefs.getString("classe", "???").contains("Super ModŽrateur"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_darkred));
+			if(prefs.getString("classe", "???").contains("Administrateur"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_salmon));
 
 			Log.v("widget t411", "mise Ã  jour du smiley");
 			int smiley = R.drawable.smiley_unknown;
@@ -192,10 +161,12 @@ public class Widget_huge extends AppWidgetProvider {
 				// l'invadroid
 				if (numRatio == 13.37)
 					smiley = R.drawable.smiley_leet;
+				
 				//easter egg :) si on est le 25/12, on affiche le pre no‘l-droid
 				if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
 						&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 25)
 					smiley = R.drawable.smiley_xmas;
+				
 			} catch (Exception ex) {
 				Log.e("widget t411", ex.toString());
 			}
@@ -204,14 +175,13 @@ public class Widget_huge extends AppWidgetProvider {
 			Log.v("widget t411", "refresh du widget");
 			// update the widget
 			appWidgetManager.updateAppWidget(widgetId, views);
+
 		}
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-
-		Log.v("widget t411",
-				"onReceive a reu le Broadcast Intent : " + intent.getAction());
+		Log.v("widget t411", "onReceive a reu le Broadcast Intent");
 
 		try {
 			username = context.getString(R.string.waiting_for_update);
@@ -237,7 +207,7 @@ public class Widget_huge extends AppWidgetProvider {
 		AppWidgetManager appWidgetManager = AppWidgetManager
 				.getInstance(context);
 		ComponentName thisAppWidget = new ComponentName(
-				context.getPackageName(), Widget_huge.class.getName());
+				context.getPackageName(), Widget_Plus.class.getName());
 		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 		onUpdate(context, appWidgetManager, appWidgetIds);
 	}

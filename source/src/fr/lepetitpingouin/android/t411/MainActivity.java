@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 	LinearLayout connectButton, mailButton, notifButton, profileButton,
 			aboutButton, btnUpdate, btnStats, hWidget;
 	TextView hLogin, hMails, hUpDown, hRatio, hGoLeft;
+	Context context;
 
 	String cookie;
 
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
 
 		prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
+		context = this.getApplicationContext();
 		updateValues();
 
 		if (prefs.getString("login", null) == null) {
@@ -148,40 +150,24 @@ public class MainActivity extends Activity {
 		hGoLeft = (TextView) findViewById(R.id.hGoLeft);
 		hGoLeft.setText(prefs.getString("GoLeft", "?.?? GB"));
 		
-		// Calcul du restant possible téléchargeable avant d'atteindre la limite de ratio fixée
-		double beforeLimit = 0;
-		try{
-		double upData = getGigaOctetData(prefs.getString("lastUpload", "U 0 GB"));
-		double dlData = getGigaOctetData(prefs.getString("lastDownload", "D 0 GB")); 
+		hLogin.setTextColor(context.getResources().getColor(R.color.t411_blue));
 		
-		double lowRatio = Double.valueOf(prefs.getString("ratioMinimum", "1"));
-		
-		beforeLimit = (upData-dlData*lowRatio)/lowRatio;
-		} catch (Exception ex){}
-		String GoLeft = null;
-		
-		// Prise en compte des quantités restantes en Tera-octets 
-		GoLeft = (beforeLimit > 1000)?String.format("%.2f", beforeLimit/1024)+" TB":String.format("%.2f", beforeLimit)+" GB";
-		
-		Editor editor = prefs.edit();
-		editor.putString("GoLeft", (beforeLimit > 0)?GoLeft:"0 GB");
-		editor.commit();
+		if(prefs.getString("classe", "???").contains("Power Seeder"))
+			hLogin.setTextColor(context.getResources().getColor(R.color.t411_purple));
+		if(prefs.getString("classe", "???").contains("Uploader"))
+			hLogin.setTextColor(context.getResources().getColor(R.color.t411_gold));
+		if(prefs.getString("classe", "???").contains("Team Pending"))
+			hLogin.setTextColor(context.getResources().getColor(R.color.t411_grey));
+		if(prefs.getString("classe", "???").contains("Modérateur"))
+			hLogin.setTextColor(context.getResources().getColor(R.color.t411_black));
+		if(prefs.getString("classe", "???").contains("Super Modérateur"))
+			hLogin.setTextColor(context.getResources().getColor(R.color.t411_darkred));
+		if(prefs.getString("classe", "???").contains("Administrateur"))
+			hLogin.setTextColor(context.getResources().getColor(R.color.t411_salmon));
+
 	}
 	
-	public Double getGigaOctetData(String value) {
-		double data;
-		try{
-			String[] array = value.split(" ");
-			data = Double.valueOf(array[1]);
-			
-			if(array[2].contains("MB")) // Mega-octet
-				data = data/1024;
-			if(array[2] == "TB") // Tera-octet
-				data = data*1024;
-			Log.v(array[1],String.valueOf(data));
-		} catch(Exception e) {data = 0;}
-		return data;
-	}
+	
 
 	public void update() {
 		try {

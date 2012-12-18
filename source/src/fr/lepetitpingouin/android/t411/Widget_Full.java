@@ -45,6 +45,14 @@ public class Widget_Full extends AppWidgetProvider {
 			// get our view so we can edit the time
 			RemoteViews views = new RemoteViews(context.getPackageName(),
 					R.layout.widget_full);
+			if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+					&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 22 && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 27)
+				views.setImageViewResource(R.id.topLogo, R.drawable.ic_xmas);
+			
+			if (Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER 
+					&& Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 0 && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < 23)
+				views.setImageViewResource(R.id.topLogo, R.drawable.ic_xmastree);
+
 
 			date = new Date();
 
@@ -106,6 +114,21 @@ public class Widget_Full extends AppWidgetProvider {
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
 			views.setTextViewText(R.id.wUsername, username);
+			
+			views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_blue));
+			
+			if(prefs.getString("classe", "???").contains("Power Seeder"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_purple));
+			if(prefs.getString("classe", "???").contains("Uploader"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_gold));
+			if(prefs.getString("classe", "???").contains("Team Pending"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_grey));
+			if(prefs.getString("classe", "???").contains("ModŽrateur"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_black));
+			if(prefs.getString("classe", "???").contains("Super ModŽrateur"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_darkred));
+			if(prefs.getString("classe", "???").contains("Administrateur"))
+				views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_salmon));
 
 			Log.v("widget t411", "mise Ã  jour du smiley");
 			int smiley = R.drawable.smiley_unknown;

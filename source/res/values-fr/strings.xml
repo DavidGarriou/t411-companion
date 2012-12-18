@@ -65,10 +65,11 @@
     <string name="donate">Faire un don (1€)</string>
 	<string name="considerDonate">Vous aimez l\'appli? Offrez-moi une bière ;o) !</string>
     
-	<string name="appwidget_huge">compagnon t411 (horloge)</string>
+	<string name="appwidget_huge">Horloge t411</string>
 	<string name="appwidget_full">compagnon t411 (normal)</string>
 	<string name="appwidget_half">compagnon t411 (petit)</string>
-	<string name="appwidget_nano">compagnon t411 (mini)</string>
+	<string name="appwidget_nano">compagnon t411 (1x1)</string>
+	<string name="appwidget_plus">compagnon t411 +</string>
 	
 	<string name="dateFormat">"EEE d LLLL"</string>
 	

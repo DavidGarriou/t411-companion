@@ -13,8 +13,13 @@ public final class R {
     public static final class color {
         public static final int t411_black=0x7f050003;
         public static final int t411_blue=0x7f050000;
+        public static final int t411_darkred=0x7f050007;
+        public static final int t411_gold=0x7f050005;
         public static final int t411_green=0x7f050002;
+        public static final int t411_grey=0x7f050006;
+        public static final int t411_purple=0x7f050004;
         public static final int t411_red=0x7f050001;
+        public static final int t411_salmon=0x7f050008;
     }
     public static final class drawable {
         public static final int bg_clock=0x7f020000;
@@ -23,56 +28,62 @@ public final class R {
         public static final int btn_t411_pressed=0x7f020003;
         public static final int bulle=0x7f020004;
         public static final int commercial_tab=0x7f020005;
-        public static final int ic_about=0x7f020006;
-        public static final int ic_action_search=0x7f020007;
-        public static final int ic_alpha=0x7f020008;
-        public static final int ic_answer=0x7f020009;
-        public static final int ic_app=0x7f02000a;
-        public static final int ic_archive=0x7f02000b;
-        public static final int ic_back=0x7f02000c;
-        public static final int ic_beer=0x7f02000d;
-        public static final int ic_beta=0x7f02000e;
-        public static final int ic_corb=0x7f02000f;
-        public static final int ic_launcher=0x7f020010;
-        public static final int ic_mail=0x7f020011;
-        public static final int ic_new=0x7f020012;
-        public static final int ic_newlauncher=0x7f020013;
-        public static final int ic_readmail=0x7f020014;
-        public static final int ic_service=0x7f020015;
-        public static final int ic_stat_message=0x7f020016;
-        public static final int ic_stat_ratio=0x7f020017;
-        public static final int ic_stat_ratio2=0x7f020018;
-        public static final int ic_stat_updating=0x7f020019;
-        public static final int ic_stats=0x7f02001a;
-        public static final int ic_touch=0x7f02001b;
-        public static final int ic_update=0x7f02001c;
-        public static final int ic_updown=0x7f02001d;
-        public static final int ic_useraccount=0x7f02001e;
-        public static final int ic_web=0x7f02001f;
-        public static final int ic_xratio=0x7f020020;
-        public static final int ic_xstats=0x7f020021;
-        public static final int ic_xunread=0x7f020022;
-        public static final int mail_read=0x7f020023;
-        public static final int mail_unread=0x7f020024;
-        public static final int main_logo=0x7f020025;
-        public static final int main_wallpaper=0x7f020026;
-        public static final int paypal=0x7f020027;
-        public static final int popup=0x7f020028;
-        public static final int smiley_cry=0x7f020029;
-        public static final int smiley_good=0x7f02002a;
-        public static final int smiley_leet=0x7f02002b;
-        public static final int smiley_love=0x7f02002c;
-        public static final int smiley_marvin=0x7f02002d;
-        public static final int smiley_neutral=0x7f02002e;
-        public static final int smiley_unknown=0x7f02002f;
-        public static final int smiley_w00t=0x7f020030;
-        public static final int smiley_xmas=0x7f020031;
-        public static final int t411=0x7f020032;
-        public static final int t411_btn=0x7f020033;
-        public static final int widget_btm_background=0x7f020034;
-        public static final int widget_content_background=0x7f020035;
-        public static final int widget_top_background=0x7f020036;
-        public static final int wl_mail_on=0x7f020037;
+        public static final int dl24=0x7f020006;
+        public static final int ic_about=0x7f020007;
+        public static final int ic_action_search=0x7f020008;
+        public static final int ic_alpha=0x7f020009;
+        public static final int ic_answer=0x7f02000a;
+        public static final int ic_app=0x7f02000b;
+        public static final int ic_archive=0x7f02000c;
+        public static final int ic_back=0x7f02000d;
+        public static final int ic_beer=0x7f02000e;
+        public static final int ic_beta=0x7f02000f;
+        public static final int ic_corb=0x7f020010;
+        public static final int ic_launcher=0x7f020011;
+        public static final int ic_mail=0x7f020012;
+        public static final int ic_new=0x7f020013;
+        public static final int ic_newlauncher=0x7f020014;
+        public static final int ic_readmail=0x7f020015;
+        public static final int ic_refresh_mini=0x7f020016;
+        public static final int ic_save_mini=0x7f020017;
+        public static final int ic_service=0x7f020018;
+        public static final int ic_stat_message=0x7f020019;
+        public static final int ic_stat_ratio=0x7f02001a;
+        public static final int ic_stat_ratio2=0x7f02001b;
+        public static final int ic_stat_updating=0x7f02001c;
+        public static final int ic_stats=0x7f02001d;
+        public static final int ic_touch=0x7f02001e;
+        public static final int ic_update=0x7f02001f;
+        public static final int ic_updown=0x7f020020;
+        public static final int ic_useraccount=0x7f020021;
+        public static final int ic_web=0x7f020022;
+        public static final int ic_xmas=0x7f020023;
+        public static final int ic_xmastree=0x7f020024;
+        public static final int ic_xratio=0x7f020025;
+        public static final int ic_xstats=0x7f020026;
+        public static final int ic_xunread=0x7f020027;
+        public static final int mail_read=0x7f020028;
+        public static final int mail_unread=0x7f020029;
+        public static final int main_logo=0x7f02002a;
+        public static final int main_wallpaper=0x7f02002b;
+        public static final int paypal=0x7f02002c;
+        public static final int popup=0x7f02002d;
+        public static final int smiley_cry=0x7f02002e;
+        public static final int smiley_good=0x7f02002f;
+        public static final int smiley_leet=0x7f020030;
+        public static final int smiley_love=0x7f020031;
+        public static final int smiley_marvin=0x7f020032;
+        public static final int smiley_neutral=0x7f020033;
+        public static final int smiley_unknown=0x7f020034;
+        public static final int smiley_w00t=0x7f020035;
+        public static final int smiley_xmas=0x7f020036;
+        public static final int t411=0x7f020037;
+        public static final int t411_btn=0x7f020038;
+        public static final int up24=0x7f020039;
+        public static final int widget_btm_background=0x7f02003a;
+        public static final int widget_content_background=0x7f02003b;
+        public static final int widget_top_background=0x7f02003c;
+        public static final int wl_mail_on=0x7f02003d;
     }
     public static final class id {
         public static final int ImageView01=0x7f090009;
@@ -107,6 +118,7 @@ public final class R {
         public static final int checkBox1=0x7f090039;
         public static final int checkBox2=0x7f09003c;
         public static final int checkBox3=0x7f09003d;
+        public static final int dl24=0x7f090051;
         public static final int editText1=0x7f09003a;
         public static final int field_frequency=0x7f090038;
         public static final int fromuser=0x7f090040;
@@ -127,7 +139,7 @@ public final class R {
         public static final int mailstate=0x7f09003f;
         public static final int mailsubject=0x7f090042;
         public static final int malistviewperso=0x7f090028;
-        public static final int menu_settings=0x7f09004f;
+        public static final int menu_settings=0x7f090055;
         public static final int miseajour=0x7f090049;
         public static final int paypal=0x7f090005;
         public static final int popupBg=0x7f090030;
@@ -142,10 +154,13 @@ public final class R {
         public static final int textView1=0x7f090004;
         public static final int textView2=0x7f09003b;
         public static final int topLogo=0x7f090007;
+        public static final int up24=0x7f090050;
         public static final int updatedTime=0x7f09004a;
+        public static final int wClasse=0x7f09004f;
         public static final int wClock=0x7f09004c;
         public static final int wDate=0x7f09004b;
         public static final int wDownload=0x7f090046;
+        public static final int wGoLeft=0x7f090052;
         public static final int wHour=0x7f09004d;
         public static final int wMails=0x7f090044;
         public static final int wMinutes=0x7f09004e;
@@ -153,6 +168,8 @@ public final class R {
         public static final int wSmiley=0x7f090048;
         public static final int wUpload=0x7f090045;
         public static final int wUsername=0x7f090043;
+        public static final int wbtn_config=0x7f090054;
+        public static final int wbtn_refresh=0x7f090053;
         public static final int webView1=0x7f09003e;
         public static final int www=0x7f09002d;
     }
@@ -170,13 +187,15 @@ public final class R {
         public static final int widget_half=0x7f03000a;
         public static final int widget_huge=0x7f03000b;
         public static final int widget_mini=0x7f03000c;
+        public static final int widget_mini_copy=0x7f03000d;
+        public static final int widget_plus=0x7f03000e;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
     }
     public static final class string {
         public static final int ChooseAction=0x7f060033;
-        public static final int DownloadLeft=0x7f06003e;
+        public static final int DownloadLeft=0x7f06003f;
         public static final int WhatToDo=0x7f06001f;
         public static final int about=0x7f060018;
         public static final int active=0x7f060013;
@@ -186,6 +205,7 @@ public final class R {
         public static final int appwidget_half=0x7f06003b;
         public static final int appwidget_huge=0x7f060039;
         public static final int appwidget_nano=0x7f06003c;
+        public static final int appwidget_plus=0x7f06003d;
         public static final int archive=0x7f060027;
         public static final int askWhatToDo=0x7f060032;
         public static final int btnStartService=0x7f060017;
@@ -196,7 +216,7 @@ public final class R {
         public static final int chk_msgAlert=0x7f060010;
         public static final int chk_ratioAlert=0x7f06000e;
         public static final int considerDonate=0x7f060038;
-        public static final int dateFormat=0x7f06003d;
+        public static final int dateFormat=0x7f06003e;
         public static final int default_username=0x7f060014;
         public static final int delete=0x7f060026;
         public static final int description_frequency=0x7f06001c;
@@ -232,8 +252,8 @@ public final class R {
         public static final int savedData=0x7f060016;
         public static final int service_settings=0x7f060008;
         public static final int show_notifs=0x7f06001d;
-        public static final int statistics=0x7f06003f;
-        public static final int test_notif=0x7f060040;
+        public static final int statistics=0x7f060040;
+        public static final int test_notif=0x7f060041;
         public static final int title_activity_main=0x7f060003;
         public static final int toggle_OFF=0x7f06000d;
         public static final int toggle_ON=0x7f06000c;
@@ -249,5 +269,6 @@ public final class R {
         public static final int widget_half_provider=0x7f040001;
         public static final int widget_huge_provider=0x7f040002;
         public static final int widget_nano_provider=0x7f040003;
+        public static final int widget_plus_provider=0x7f040004;
     }
 }
