@@ -1,15 +1,14 @@
 <manifest package="fr.lepetitpingouin.android.t411"
-    android:versionCode="19"
-    android:versionName="0.9.6 beta (bugfix)" android:installLocation="internalOnly" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionCode="23"
+    android:versionName="0.9.7 beta3 (bugfix)" android:installLocation="internalOnly" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="8" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    
-    
 
     <application
         android:icon="@drawable/ic_newlauncher"
@@ -57,7 +56,6 @@
 			<intent-filter 
 			    android:priority="175" >
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-				<action android:name="android.intent.action.USER_PRESENT" />
 				
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider"
@@ -81,7 +79,8 @@
             </intent-filter>
          </receiver>
         <activity android:name="Settings" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <service android:name="t411updater" android:label="t411updateService" android:process=":remote" ></service>
+        <service android:name="t411updater" android:label="t411updateService" android:process=":t411update" android:singleUser="true"></service>
+        <service android:name="t411clock" android:label="t411ClockService" android:process=":t411clock" android:singleUser="true"></service>
         <activity android:name="userLogin"></activity>
         <activity android:name="messagesActivity"
             android:configChanges="orientation" ></activity>

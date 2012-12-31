@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -19,7 +18,7 @@ public class MainActivity extends Activity {
 
 	LinearLayout connectButton, mailButton, notifButton, profileButton,
 			aboutButton, btnUpdate, btnStats, hWidget;
-	TextView hLogin, hMails, hUpDown, hRatio, hGoLeft;
+	TextView hLogin, hMails, hUpDown, hRatio, hGoLeft, hUpLeft;
 	Context context;
 
 	String cookie;
@@ -149,6 +148,9 @@ public class MainActivity extends Activity {
 		
 		hGoLeft = (TextView) findViewById(R.id.hGoLeft);
 		hGoLeft.setText(prefs.getString("GoLeft", "?.?? GB"));
+		
+		hUpLeft = (TextView) findViewById(R.id.hUpLeft);
+		hUpLeft.setText(prefs.getString("UpLeft", "?.?? GB"));
 		
 		hLogin.setTextColor(context.getResources().getColor(R.color.t411_blue));
 		

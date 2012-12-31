@@ -15,5 +15,7 @@ public class Receiver extends BroadcastReceiver {
 
 		Intent intent = new Intent(ctx, t411updater.class);
 		ctx.startService(intent);
+		
+		ctx.startService(new Intent(ctx.getApplicationContext(), t411clock.class));
 	}
 }

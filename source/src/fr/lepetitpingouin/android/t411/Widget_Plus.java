@@ -116,10 +116,20 @@ public class Widget_Plus extends AppWidgetProvider {
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
 			views.setTextViewText(R.id.wUsername, username);
+			
 			views.setTextViewText(R.id.wGoLeft, prefs.getString("GoLeft", "0 GB"));
+			views.setTextViewText(R.id.wUpLeft, prefs.getString("UpLeft", "0 GB"));
+			
 			views.setTextViewText(R.id.up24, prefs.getString("up24", "..."));
 			views.setTextViewText(R.id.dl24, prefs.getString("dl24", "..."));
-			views.setTextViewText(R.id.wClasse, " ("+prefs.getString("classe", "???")+")");
+			
+				String classe = prefs.getString("classe", "???");
+				String titre = prefs.getString("titre", "");
+				String status = " ("+classe + ((titre.length()>1)?", "+titre:"")+")";
+				
+			views.setTextViewText(R.id.wClasse, status);
+			
+			//views.setTextViewText(R.id.wClasse, " ("+prefs.getString("classe", "???")+")");
 			
 			views.setTextColor(R.id.wUsername, context.getResources().getColor(R.color.t411_blue));
 			
@@ -153,6 +163,10 @@ public class Widget_Plus extends AppWidgetProvider {
 					smiley = R.drawable.smiley_w00t;
 				if (numRatio > 9.99)
 					smiley = R.drawable.smiley_love;
+				
+				// Ratio a 50 ou +, et plus de 100 GB en UP, Chuck Norris :)
+				if (numRatio > 49.99 && ((upload.length() > 10 && upload.contains("GB")) || upload.contains("TB")))
+					smiley = R.drawable.smiley_chucknorris;
 
 				// easter egg :) si le ratio contient 42, on affiche Marvin :)
 				if (String.valueOf(numRatio).contains("42"))

@@ -74,6 +74,9 @@
 	<string name="dateFormat">"EEE d LLLL"</string>
 	
 	<string name="DownloadLeft">avant la limite de ratio faible.</string>
+	<string name="UploadLeft">à seeder avant le ratio souhaité.</string>
 
 	<string name="statistics">Mes statistiques</string>
+	<string name="noConError">Le widget t411 ne peut pas accéder à internet...</string>
+	
 </resources>

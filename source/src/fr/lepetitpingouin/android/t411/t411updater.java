@@ -14,12 +14,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -35,7 +35,7 @@ public class t411updater extends Service {
 	PendingIntent pendingIntent;
 
 	SharedPreferences prefs;
-	BroadcastReceiver bR;
+	
 
 	int freq; // fréquence de rafraichissement (en minutes)
 
@@ -44,94 +44,86 @@ public class t411updater extends Service {
 	// La page de login t411 :
 	static final String CONNECTURL = "http://www.t411.me/users/login/?returnto=%2Fusers%2Fprofile%2F";
 
+	
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-				
-		Log.v("Service t411", "onStartCommand");
-
-		Log.v("Service t411","Trying to register ACTION_TIME_TICK");
-		bR = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				sendBroadcast(new Intent(
-						"android.appwidget.action.APPWIDGET_UPDATE"));
-				Log.v("ACTION_TIME_TICK", "Clock updated !");
-			}
-		};
-		
-		IntentFilter iF = new IntentFilter(Intent.ACTION_TIME_TICK);
-		
-		try{ // on essaye de désenregistrer le receiver pour éviter les doublons
-			unregisterReceiver(bR);
-			}
-		catch(Exception ex){
-			Log.e("Cancel receiver :",ex.toString());
-		}
-		try {
-			registerReceiver(bR, iF);
-		} catch (Exception ex){Log.e("registerReceiver",ex.toString());}
-
-		Log.v("Service t411","Trying to register ACTION_TIME_TICK : OK");
-		
 		// on charge les préférences de l'application
-		prefs = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
-
-		// notifier le début de la mise à jour, si l'option a été cochée
-		if (prefs.getBoolean("updAlert", false))
-			createNotify(1992, R.drawable.ic_stat_updating,
-					this.getString(R.string.notif_update),
-					this.getString(R.string.notif_upd_title),
-					this.getString(R.string.notif_upd_content), false,
-					t411updater.class);
-
-		try {
-			// Mise à jour
-			update(prefs.getString("login", ""),
-					prefs.getString("password", ""));
-		} catch (Exception ex) {
-			Log.v("Credentials :",
-					prefs.getString("login", "") + ":"
-							+ prefs.getString("password", ""));
-			Log.e("update", ex.toString());
+			prefs = PreferenceManager
+					.getDefaultSharedPreferences(getApplicationContext());if(isOnline()){
+					
+			Log.v("Service t411", "onStartCommand");
+			Log.d("isClockPresent ?",String.valueOf(prefs.getBoolean("isClockPresent", false)));
+	
+			// notifier le début de la mise à jour, si l'option a été cochée
+			if (prefs.getBoolean("updAlert", false))
+				createNotify(1992, R.drawable.ic_stat_updating,
+						this.getString(R.string.notif_update),
+						this.getString(R.string.notif_upd_title),
+						this.getString(R.string.notif_upd_content), false,
+						t411updater.class);
+	
+			try {
+				// Mise à jour
+				update(prefs.getString("login", ""),
+						prefs.getString("password", ""));
+			} catch (Exception ex) {
+				Log.v("Credentials :",
+						prefs.getString("login", "") + ":"
+								+ prefs.getString("password", ""));
+				Log.e("update", ex.toString());
+				//Toast.makeText(getApplicationContext(), "Timeout", Toast.LENGTH_SHORT).show();
+			}
+	
+			Intent myIntent = new Intent(t411updater.this, t411updater.class);
+			pendingIntent = PendingIntent.getService(t411updater.this, 0, myIntent, 0);
+	
+			alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+	
+			freq = Integer.valueOf(prefs.getString("updateFreq", "15"));
+			Log.v("Fréquence avant vérification", String.valueOf(freq));
+			freq = (freq < 1) ? 1 : freq;
+			Log.v("Fréquence après vérification", String.valueOf(freq));
+	
+			// on définit une instance de Calendar selon la configuration
+			// utilisateur (15 mn par défaut)
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			calendar.add(Calendar.MINUTE, freq);
+	
+			try {
+				// on annule l'alarme existante
+				alarmManager.cancel(pendingIntent);
+			} catch (Exception ex) {
+				Log.e("AlarmManager", ex.toString());
+			}
+			
+			// ...et on la reprogramme, si la config utilisateur le permet
+			if (prefs.getBoolean("autoUpdate", false))
+				alarmManager.set(AlarmManager.RTC_WAKEUP,
+						calendar.getTimeInMillis(), pendingIntent);
+	
+			try {
+				// annuler la notification de mise à jour
+				cancelNotify(1992);
+			} finally {
+				//stopSelf();
+			}
 		}
-
-		Intent myIntent = new Intent(t411updater.this, t411updater.class);
-		pendingIntent = PendingIntent.getService(t411updater.this, 0, myIntent,
-				0);
-
-		alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-		freq = Integer.valueOf(prefs.getString("updateFreq", "15"));
-		Log.v("Fréquence avant vérification", String.valueOf(freq));
-		freq = (freq < 1) ? 1 : freq;
-		Log.v("Fréquence après vérification", String.valueOf(freq));
-
-		// on définit une instance de Calendar selon la configuration
-		// utilisateur (15 mn par défaut)
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(System.currentTimeMillis());
-		calendar.add(Calendar.MINUTE, freq);
-
-		try {
-			// on annule l'alarme existante
-			alarmManager.cancel(pendingIntent);
-		} catch (Exception ex) {
-			Log.e("AlarmManager", ex.toString());
+		else {
+			Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.noConError), Toast.LENGTH_SHORT).show();
 		}
 		
-		// ...et on la reprogramme, si la config utilisateur le permet
-		if (prefs.getBoolean("autoUpdate", false))
-			alarmManager.set(AlarmManager.RTC_WAKEUP,
-					calendar.getTimeInMillis(), pendingIntent);
-
-		try {
-			// annuler la notification de mise à jour
-			cancelNotify(1992);
-		} finally {
-			//stopSelf();
-		}
-		return super.onStartCommand(intent, flags, startId);
+		return START_STICKY;
 	}
 
 	@Override
@@ -142,13 +134,6 @@ public class t411updater extends Service {
 		cancelNotify(1990);
 		cancelNotify(1991);
 		cancelNotify(1992);
-		
-		try{
-			unregisterReceiver(bR);
-			}
-		catch(Exception ex){
-			Log.e("Cancel receiver :",ex.toString());
-		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -158,17 +143,19 @@ public class t411updater extends Service {
 		Document doc = null;
 		// on exécute la requête HTTP, en passant le login et le password en
 		// POST.
+		Log.d("update()", "Connecting...");
 		res = Jsoup
 				.connect(CONNECTURL)
 				.data("login", login, "password", password)
 				.method(Method.POST)
-				//.userAgent(
-				//		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
+				.ignoreContentType(true)
+				.ignoreHttpErrors(true)
+				.userAgent(
+						"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21")
 				.timeout(15000) // timeout 15s pour éviter de figer le service
 				.execute();
-
 		Log.v("Service t411","JSoup exécuté");
-		
+		Log.d("update()", "Parsing...");
 		doc = res.parse();
 
 		// on récupère l'erreur de connexion, le cas échéant
@@ -212,16 +199,28 @@ public class t411updater extends Service {
 			// téléchargements (24h)
 			Log.d("DT","----------------------------");
 			
-			String classe = "";//doc.select(".block > div > dl > dt").get(0).text();
-			classe += doc.select(".block > div > dl > dd").get(0).text();
+			String classe = "";
+			String up24 = "";
+			String dl24 = "";
+			String titre = "";
+			
+			String val = "";
+			
+			for(int iterator = 0; iterator < doc.select(".block > div > dl > dt").size(); iterator++)
+			{
+				val = doc.select(".block > div > dl > dt").get(iterator).text();
+				if(val.contains("Classe:"))
+					classe = doc.select(".block > div > dl > dd").get(iterator).text();
+				if(val.contains("Titre personnalis"))
+					titre = doc.select(".block > div > dl > dd").get(iterator).text();
+				if(val.contains("Total") && val.contains("(24h") && val.contains("charg"))
+					dl24 = doc.select(".block > div > dl > dd").get(iterator).text();
+				if(val.contains("Total") && val.contains("(24h") && val.contains("Upload"))
+					up24 = doc.select(".block > div > dl > dd").get(iterator).text();
+			}
 			Log.d("Classe",classe);
-			
-			String up24 = "";//doc.select(".block > div > dl > dt").get(10).text();
-			up24 += doc.select(".block > div > dl > dd").get(10).text();
+			Log.d("Titre",titre);
 			Log.d("DT",up24);
-			
-			String dl24 = "";//doc.select(".block > div > dl > dt").get(11).text();
-			dl24 += doc.select(".block > div > dl > dd").get(11).text();
 			Log.d("DD",dl24);
 			
 			// Calcul du restant possible téléchargeable avant d'atteindre la limite de ratio fixée
@@ -236,15 +235,36 @@ public class t411updater extends Service {
 			} catch (Exception ex){}
 			String GoLeft = null;
 			
+			// Calcul de l'upload e faire avant d'atteindre la limite de ratio
+			double toLimit = 0;
+			try{
+			double upData = getGigaOctetData(prefs.getString("lastUpload", "U 0 GB"));
+			double dlData = getGigaOctetData(prefs.getString("lastDownload", "D 0 GB")); 
+			
+			double curRatio = upData/dlData;
+			Log.d("Current Ratio :",String.valueOf(curRatio));
+			
+			double lowRatio = Double.valueOf(prefs.getString("ratioMinimum", "1"));
+			Log.d("Low Ratio :",String.valueOf(lowRatio));
+			
+			toLimit = (lowRatio*upData/curRatio) - upData;
+			Log.d("toRatio :",String.valueOf(toLimit));
+			} catch (Exception ex){}
+			
+			String UpLeft = null;
+			
 			// Prise en compte des quantités restantes en Tera-octets 
 			GoLeft = (beforeLimit > 500)?String.format("%.2f", beforeLimit/1024)+" TB":String.format("%.2f", beforeLimit)+" GB";
-			
+			UpLeft = (toLimit > 500)?String.format("%.2f", toLimit/1024)+" TB":String.format("%.2f", toLimit)+" GB";
+			Log.d("left2DL : ",UpLeft);
 			// on stocke tout ce petit monde (si non nul) dans les préférences
 			Editor editor = prefs.edit();
 			editor.putString("classe", classe);
 			editor.putString("up24", up24);
 			editor.putString("dl24", dl24);
-			editor.putString("GoLeft", (beforeLimit > 0)?GoLeft:"0 GB");
+			editor.putString("titre", titre);
+			editor.putString("GoLeft", (beforeLimit > 0)?GoLeft:"0,00 GB");
+			editor.putString("UpLeft", (toLimit > 0)?UpLeft:"0,00 GB");
 			
 			if (mails != null)
 				editor.putInt("lastMails", mails);
@@ -272,7 +292,7 @@ public class t411updater extends Service {
 				i.putExtra("download", download);
 				i.putExtra("mails", String.valueOf(mails));
 				i.putExtra("username", username);
-				Log.v("t41updater", "Envoi du Broadcast Intent");
+				Log.v("t411updater", "Envoi du Broadcast Intent");
 				sendBroadcast(i);
 				doNotify();
 			} catch (Exception ex) {
@@ -289,7 +309,7 @@ public class t411updater extends Service {
 			
 			if(array[2].contains("MB")) // Mega-octet
 				data = data/1024;
-			if(array[2] == "TB") // Tera-octet
+			if(array[2].contains("TB")) // Tera-octet
 				data = data*1024;
 			Log.v(array[1],String.valueOf(data));
 		} catch(Exception e) {data = 0;}

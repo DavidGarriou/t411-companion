@@ -11,11 +11,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -32,11 +32,35 @@ public class Widget_huge extends AppWidgetProvider {
 	Intent myIntent = new Intent();
 	PendingIntent pIntent;
 	SharedPreferences prefs;
+	Editor edit;
+	Intent serviceIntent;
+	
+	@Override
+	public void onDeleted(Context context, int[] appWidgetIds) {
+		Log.v("Widget Clock","onDeleted");
+		if(appWidgetIds.length < 1)
+			context.stopService(new Intent(context, t411updater.class));
+		super.onDeleted(context, appWidgetIds);
+	}
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		Log.v("widget t411", "onUpdate");
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		
+		Log.d("isClockPresent ?",String.valueOf(prefs.getBoolean("isClockPresent", false)));
+
+		if(prefs.getBoolean("isClockPresent", false) == false) {
+			serviceIntent = new Intent(context.getApplicationContext(), t411clock.class);
+			context.startService(serviceIntent);
+			edit = prefs.edit();
+			edit.putBoolean("isClockPresent", true);
+			edit.commit();
+		}
+		
+		
+
 		final int N = appWidgetIds.length;
 
 		username = context.getString(R.string.waiting_for_update);
@@ -54,7 +78,6 @@ public class Widget_huge extends AppWidgetProvider {
 			try {
 				Log.v("widget t411", "DŽfinition de l'Intent");
 
-				prefs = PreferenceManager.getDefaultSharedPreferences(context);
 				ratio = (ratio == null) ? prefs.getString("lastRatio", "?.??")
 						: ratio;
 				upload = (upload == null) ? prefs.getString("lastUpload",
@@ -136,6 +159,8 @@ public class Widget_huge extends AppWidgetProvider {
 				        // add pending intent to your component
 				    views.setOnClickPendingIntent(R.id.wClock, pendingIntent);
 				}
+				
+				views.setOnClickPendingIntent(R.id.restartBtn, PendingIntent.getService(context, 0, new Intent(context.getApplicationContext(), t411clock.class), 0));
 			}
 			catch (Exception ex) {
 				Log.e("Clock exception :",ex.toString());

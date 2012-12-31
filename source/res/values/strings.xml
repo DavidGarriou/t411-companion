@@ -83,6 +83,8 @@
 	<string name="dateFormat">"EEE LLLL d"</string>
 	
 	<string name="DownloadLeft">before low ratio.</string>
+	<string name="UploadLeft">to seed before wished ratio.</string>
 	
 	<string name="statistics">My statistics</string>
+	<string name="noConError">t411 widget is not able to connect...</string>
 </resources>

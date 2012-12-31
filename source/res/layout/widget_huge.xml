@@ -22,7 +22,7 @@
                         android:gravity="center" >
 
                         <LinearLayout
-                            android:id="@+id/topLogo"
+                            android:id="@+id/fond"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="73dp"
@@ -41,6 +41,7 @@
                                 android:textSize="12dp" />
 
                             <LinearLayout
+                                android:id="@+id/topLogo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/widget_content_background" >
@@ -133,6 +134,16 @@
                                 android:textSize="11dp" />
 
                         </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/restartBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignRight="@+id/fond"
+                            android:layout_marginRight="7dp"
+                            android:layout_marginTop="83dp"
+                            android:src="@drawable/restartclock" />
 
                     </RelativeLayout>
 
