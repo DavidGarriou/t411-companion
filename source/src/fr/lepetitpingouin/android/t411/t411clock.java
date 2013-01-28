@@ -13,11 +13,9 @@ import android.util.Log;
 public class t411clock extends Service {
 	
 	BroadcastReceiver bR;
-	SharedPreferences prefs;
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 		bR = new BroadcastReceiver() {
 			@Override
@@ -35,7 +33,6 @@ public class t411clock extends Service {
 			unregisterReceiver(bR);
 		} catch (Exception ex){}
 		try {
-			if(prefs.getBoolean("isClockPresent", false));
 			registerReceiver(bR, iF);
 		} catch (Exception ex){Log.e("registerReceiver",ex.toString());}
 		

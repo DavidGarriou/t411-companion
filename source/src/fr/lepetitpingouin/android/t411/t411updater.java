@@ -277,7 +277,6 @@ public class t411updater extends Service {
 			Log.v("INFOS T411 :", "Mails (" + String.valueOf(mails) + ") "
 					+ upload + " " + download + " " + String.valueOf(ratio));
 
-			i = new Intent("android.appwidget.action.APPWIDGET_UPDATE");
 			try {
 				i.putExtra("ratio", String.valueOf(ratio));
 				i.putExtra("upload", upload);
@@ -381,7 +380,7 @@ public class t411updater extends Service {
 						prefs.getString("login", "") + ":"
 								+ prefs.getString("password", ""));
 				Log.e("update", ex.toString());
-				//Toast.makeText(getApplicationContext(), "Timeout", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Timeout", Toast.LENGTH_SHORT).show();
 			}
 			return null;
 		}

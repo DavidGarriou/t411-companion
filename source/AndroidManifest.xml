@@ -1,6 +1,6 @@
 <manifest package="fr.lepetitpingouin.android.t411"
-    android:versionCode="25"
-    android:versionName="0.9.7 beta5 (optim)" android:installLocation="internalOnly" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionCode="26"
+    android:versionName="0.9.7 beta5 (debug)" android:installLocation="internalOnly" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk
         android:minSdkVersion="7"
