@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -72,17 +73,7 @@ public class t411updater extends Service {
 						this.getString(R.string.notif_upd_content), false,
 						t411updater.class);
 	
-			try {
-				// Mise ˆ jour
-				update(prefs.getString("login", ""),
-						prefs.getString("password", ""));
-			} catch (Exception ex) {
-				Log.v("Credentials :",
-						prefs.getString("login", "") + ":"
-								+ prefs.getString("password", ""));
-				Log.e("update", ex.toString());
-				//Toast.makeText(getApplicationContext(), "Timeout", Toast.LENGTH_SHORT).show();
-			}
+			new AsyncUpdate().execute();
 	
 			Intent myIntent = new Intent(t411updater.this, t411updater.class);
 			pendingIntent = PendingIntent.getService(t411updater.this, 0, myIntent, 0);
@@ -244,8 +235,8 @@ public class t411updater extends Service {
 			double curRatio = upData/dlData;
 			Log.d("Current Ratio :",String.valueOf(curRatio));
 			
-			double lowRatio = Double.valueOf(prefs.getString("ratioMinimum", "1"));
-			Log.d("Low Ratio :",String.valueOf(lowRatio));
+			double lowRatio = Double.valueOf(prefs.getString("ratioCible", "1"));
+			Log.d("Target Ratio :",String.valueOf(lowRatio));
 			
 			toLimit = (lowRatio*upData/curRatio) - upData;
 			Log.d("toRatio :",String.valueOf(toLimit));
@@ -286,6 +277,7 @@ public class t411updater extends Service {
 			Log.v("INFOS T411 :", "Mails (" + String.valueOf(mails) + ") "
 					+ upload + " " + download + " " + String.valueOf(ratio));
 
+			i = new Intent("android.appwidget.action.APPWIDGET_UPDATE");
 			try {
 				i.putExtra("ratio", String.valueOf(ratio));
 				i.putExtra("upload", upload);
@@ -373,5 +365,26 @@ public class t411updater extends Service {
 	public IBinder onBind(Intent intent) {
 		Log.v("Binder", intent.toString());
 		return null;
+	}
+	
+	private class AsyncUpdate extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			try {
+				// Mise ˆ jour
+				update(prefs.getString("login", ""),
+						prefs.getString("password", ""));
+			} catch (Exception ex) {
+				Log.v("Credentials :",
+						prefs.getString("login", "") + ":"
+								+ prefs.getString("password", ""));
+				Log.e("update", ex.toString());
+				//Toast.makeText(getApplicationContext(), "Timeout", Toast.LENGTH_SHORT).show();
+			}
+			return null;
+		}
+		
 	}
 }

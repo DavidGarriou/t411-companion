@@ -38,8 +38,12 @@ public class Widget_huge extends AppWidgetProvider {
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
 		Log.v("Widget Clock","onDeleted");
-		if(appWidgetIds.length < 1)
+		if(appWidgetIds.length < 1) {
+			edit = prefs.edit();
+			edit.putBoolean("isClockPresent", true);
+			edit.commit();
 			context.stopService(new Intent(context, t411updater.class));
+		}
 		super.onDeleted(context, appWidgetIds);
 	}
 

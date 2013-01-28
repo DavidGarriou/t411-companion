@@ -3,6 +3,5 @@
    		 android:minWidth="40dip"
    		 android:minHeight="40dip"
    		 android:initialLayout="@layout/widget_mini"
-   		 
    		 android:widgetCategory="home_screen"
 />

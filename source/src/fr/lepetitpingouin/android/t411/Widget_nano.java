@@ -20,10 +20,10 @@ import android.widget.RemoteViews;
 public class Widget_nano extends AppWidgetProvider {
 
 	ImageButton updateBtn;
-	String ratio, upload, download, mails;
+	String ratio, mails;
 	// Les mêmes, qui vont servir de tampon pour valider les données du
 	// service
-	String _ratio, _upload, _download, _mails;
+	String _ratio, _mails;
 	Date date = new Date();
 	Intent myIntent = new Intent();
 	PendingIntent pIntent;
@@ -51,10 +51,6 @@ public class Widget_nano extends AppWidgetProvider {
 				prefs = PreferenceManager.getDefaultSharedPreferences(context);
 				ratio = (ratio == null) ? prefs.getString("lastRatio", "?.??")
 						: ratio;
-				upload = (upload == null) ? prefs.getString("lastUpload",
-						"  ???.?? MB") : upload;
-				download = (download == null) ? prefs.getString("lastDownload",
-						"  ???.?? MB") : download;
 				mails = (mails == null) ? String.valueOf(prefs.getInt(
 						"lastMails", 0)) : mails;
 
@@ -95,8 +91,6 @@ public class Widget_nano extends AppWidgetProvider {
 
 			views.setTextViewText(R.id.updatedTime,
 					prefs.getString("lastDate", "?????"));
-			views.setTextViewText(R.id.wUpload, upload);
-			views.setTextViewText(R.id.wDownload, download);
 			views.setTextViewText(R.id.wMails, mails);
 			views.setTextViewText(R.id.wRatio, ratio);
 
@@ -153,10 +147,6 @@ public class Widget_nano extends AppWidgetProvider {
 		try {
 			_ratio = intent.getStringExtra("ratio");
 			ratio = (_ratio != null) ? _ratio : ratio;
-			_upload = intent.getStringExtra("upload");
-			upload = (_upload != null) ? _upload : upload;
-			_download = intent.getStringExtra("download");
-			download = (_download != null) ? _download : download;
 			_mails = intent.getStringExtra("mails");
 			mails = (_mails != null) ? _mails : mails;
 		} catch (Exception ex) {

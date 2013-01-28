@@ -162,8 +162,8 @@
 
                             <ImageView
                                 android:id="@+id/imageView1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
                                 android:src="@drawable/up24" />
 
                             <TextView
@@ -196,8 +196,8 @@
 
                             <ImageView
                                 android:id="@+id/ImageView01"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
                                 android:src="@drawable/dl24" />
 
                         </LinearLayout>
@@ -212,12 +212,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_margin="2dip"
+                            android:layout_margin="1dip"
                             android:ellipsize="start"
                             android:lines="1"
                             android:text="0.00 GB"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="12dp"
+                            android:textSize="11dp"
                             android:textColor="#AA000000" />
 
                         <TextView
@@ -225,12 +225,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_margin="2dip"
+                            android:layout_margin="1dip"
                             android:ellipsize="start"
                             android:lines="1"
                             android:text="@string/DownloadLeft"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="12dp"
+                            android:textSize="11dp"
                             android:textColor="#AA000000" />
 
                     </LinearLayout>
@@ -244,26 +244,26 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_margin="2dip"
+                            android:layout_margin="1dip"
                             android:ellipsize="start"
                             android:lines="1"
                             android:text="0.00 GB"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="#AA000000"
-                            android:textSize="12dp" />
+                            android:textSize="11dp" />
 
                         <TextView
                             android:id="@+id/TextView01"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_margin="2dip"
+                            android:layout_margin="1dip"
                             android:ellipsize="start"
                             android:lines="1"
                             android:text="@string/UploadLeft"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="#AA000000"
-                            android:textSize="12dp" />
+                            android:textSize="11dp" />
                     </LinearLayout>
 
                     <FrameLayout

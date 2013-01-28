@@ -178,6 +178,32 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btnSearch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dip"
+                    android:background="@drawable/t411_btn"
+                    android:focusable="true"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:id="@+id/ImageView06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dip"
+                        android:src="@drawable/ic_action_search" />
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/title_search"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/btnMails"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

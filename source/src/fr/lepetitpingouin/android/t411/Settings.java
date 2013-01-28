@@ -30,7 +30,7 @@ public class Settings extends Activity {
 
 	// et on prépare les champs de l'interface
 	CheckBox ratioAlert, mailAlert, notifAlert, autoUpdate;
-	EditText minimum, frequency;
+	EditText minimum, frequency, targetR;
 	LinearLayout btnStartService, btnWidgetAction;
 	ImageView topLogo;
 
@@ -136,6 +136,35 @@ public class Settings extends Activity {
 
 				// you can call or do what you want with your EditText here
 				editor.putString("ratioMinimum", s.toString());
+				editor.commit();
+				// Toast.makeText(getApplicationContext(), s.toString(),
+				// Toast.LENGTH_LONG).show();
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		targetR = (EditText) findViewById(R.id.EditText01);
+		targetR.setText(prefs.getString("ratioCible", "1"));
+		targetR.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+				// you can call or do what you want with your EditText here
+				editor.putString("ratioCible", s.toString());
 				editor.commit();
 				// Toast.makeText(getApplicationContext(), s.toString(),
 				// Toast.LENGTH_LONG).show();

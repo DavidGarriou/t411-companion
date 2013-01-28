@@ -33,13 +33,14 @@
                             android:id="@+id/wUpload"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="marquee"
                             android:layout_weight="1"
+                            android:ellipsize="marquee"
                             android:gravity="center"
-                            android:textSize="12dip"
+                            android:singleLine="true"
                             android:text="↑ ???.?? GB"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_green" />
+                            android:textColor="@color/t411_green"
+                            android:textSize="12dip" />
 
                         <TextView
                             android:id="@+id/wDownload"
@@ -48,11 +49,13 @@
                             android:layout_weight="1"
                             android:ellipsize="marquee"
                             android:gravity="center"
-                            android:textSize="12dip"
                             android:maxLines="1"
+                            android:singleLine="true"
                             android:text="↓ ???.?? MB"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/t411_red" />
+                            android:textColor="@color/t411_red"
+                            android:textSize="12dip" />
+
                     </LinearLayout>
 
                     <LinearLayout

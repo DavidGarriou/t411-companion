@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
 
 	String conError;
 
-	LinearLayout connectButton, mailButton, notifButton, profileButton,
+	LinearLayout searchButton, connectButton, mailButton, notifButton, profileButton,
 			aboutButton, btnUpdate, btnStats, hWidget;
 	TextView hLogin, hMails, hUpDown, hRatio, hGoLeft, hUpLeft;
 	Context context;
@@ -55,6 +55,17 @@ public class MainActivity extends Activity {
 			MainActivity.this.startActivity(myIntent);
 		}
 
+		searchButton = (LinearLayout) findViewById(R.id.btnSearch);
+		searchButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent myIntent = new Intent(MainActivity.this,
+						SearchActivity.class);
+				MainActivity.this.startActivity(myIntent);
+			}
+		});
+		
 		btnUpdate = (LinearLayout) findViewById(R.id.btnHomeUpdate);
 		btnUpdate.setOnClickListener(new View.OnClickListener() {
 			@Override
