@@ -34,7 +34,7 @@ public class t411updater extends Service {
 
 	AlarmManager alarmManager;
 	PendingIntent pendingIntent;
-
+	
 	SharedPreferences prefs;
 	
 
@@ -72,8 +72,14 @@ public class t411updater extends Service {
 						this.getString(R.string.notif_upd_title),
 						this.getString(R.string.notif_upd_content), false,
 						t411updater.class);
-	
-			new AsyncUpdate().execute();
+			
+			try {
+				new AsyncUpdate().execute();
+			}
+			catch (Exception ex) {
+				Log.e("AsyncTask error :", ex.toString());
+				Toast.makeText(getApplicationContext(), "Error...", Toast.LENGTH_SHORT).show();
+			}
 	
 			Intent myIntent = new Intent(t411updater.this, t411updater.class);
 			pendingIntent = PendingIntent.getService(t411updater.this, 0, myIntent, 0);
@@ -99,15 +105,10 @@ public class t411updater extends Service {
 			}
 			
 			// ...et on la reprogramme, si la config utilisateur le permet
-			if (prefs.getBoolean("autoUpdate", false))
-				alarmManager.set(AlarmManager.RTC_WAKEUP,
+			if (prefs.getBoolean("autoUpdate", false)) {
+				alarmManager.set(AlarmManager.RTC, // not RTC_WAKEUP for battery saving
 						calendar.getTimeInMillis(), pendingIntent);
-	
-			try {
-				// annuler la notification de mise ˆ jour
-				cancelNotify(1992);
-			} finally {
-				//stopSelf();
+				Log.d("AlarmManager","registered");
 			}
 		}
 		else {
@@ -380,9 +381,15 @@ public class t411updater extends Service {
 						prefs.getString("login", "") + ":"
 								+ prefs.getString("password", ""));
 				Log.e("update", ex.toString());
-				Toast.makeText(getApplicationContext(), "Timeout", Toast.LENGTH_SHORT).show();
 			}
 			return null;
+		}
+		
+		protected void onPostExecute(Void result) {
+			Log.d("PostExecute","");
+			cancelNotify(1992);
+			super.onPostExecute(result);	
+			//stopSelf();
 		}
 		
 	}

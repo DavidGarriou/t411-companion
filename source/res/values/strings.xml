@@ -88,4 +88,6 @@
 	<string name="statistics">My statistics</string>
 	<string name="noConError">t411 widget is not able to connect...</string>
 	<string name="title_search">Torrent search</string>
+	
+	<string name="launcher_messages">t411 PM</string>
 </resources>

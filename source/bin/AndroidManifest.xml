@@ -1,6 +1,6 @@
 <manifest package="fr.lepetitpingouin.android.t411"
-    android:versionCode="26"
-    android:versionName="0.9.7 beta5 (debug)" android:installLocation="internalOnly" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionCode="29"
+    android:versionName="0.9.8 beta (2013.2-pre)" android:installLocation="internalOnly" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -19,7 +19,6 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             
@@ -74,11 +73,19 @@
             </intent-filter>
          </receiver>
         <activity android:name="Settings" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <service android:name="t411updater" android:label="t411updateService" android:process=":t411update" android:singleUser="true"></service>
-        <service android:name="t411clock" android:label="t411ClockService" android:process=":t411clock" android:singleUser="true"></service>
+        <service android:name="t411updater" android:label="t411updateService" android:singleUser="true"></service>
+        <service android:name="t411clock" android:label="t411ClockService" android:singleUser="true"></service>
         <activity android:name="userLogin"></activity>
         <activity android:name="messagesActivity"
-            android:configChanges="orientation" ></activity>
+            android:configChanges="orientation" 
+            android:taskAffinity="your.own.package.SettingsTask"
+            android:icon="@drawable/ic_launcher_messages"
+            android:label="@string/launcher_messages" >
+   			<intent-filter>
+   			    <action android:name="android.intent.action.MAIN" />
+            	<category android:name="android.intent.category.LAUNCHER" />
+           	</intent-filter>
+        </activity>
         <activity android:name="statsActivity"
             android:configChanges="orientation" ></activity>
         <activity android:name="aboutActivity" android:theme="@android:style/Theme.Dialog"></activity>
@@ -86,10 +93,8 @@
             android:configChanges="orientation"></activity>
         <activity android:name="actionSelector"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:process=":t411action"
-            android:launchMode="singleInstance">
+            android:process=":t411action">
         </activity>
-        <activity android:name="SearchActivity"></activity>
     </application>
 
 </manifest>

@@ -79,4 +79,6 @@
 	<string name="statistics">Mes statistiques</string>
 	<string name="noConError">Le widget t411 ne peut pas accéder à internet...</string>
 	
+	<string name="launcher_messages">MP t411</string>
+	
 </resources>
